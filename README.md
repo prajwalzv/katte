@@ -24,3 +24,5 @@ Every friend group in Bengaluru has the same problem — “Where should we go?�
 git clone https://github.com/prajwalzv/katta.git
 cd katta
 open index.html
+
+
