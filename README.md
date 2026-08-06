@@ -93,9 +93,9 @@ node errcheck.js  # hammers every control combination looking for runtime errors
 
 ## Built by
 
-- Name one, GitHub handle
-- Name two, GitHub handle
-- Name three, GitHub handle
+- prajwalzv
+- pratheekshareddysm24cs-art
+- masoom-mm
 
 ## Licence
 
