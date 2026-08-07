@@ -1,16 +1,12 @@
-S C:\Users\prath\Downloads\katta-main> git add . 
-git : The term 'git' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the 
-spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ git add .
-+ ~~~
-    + CategoryInfo          : ObjectNotFound: (git:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
-S C:\Users\prath\Downloads\katta-main> git add . 
-git : The term 'git' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the 
-spelling of the name, or if a path was included, verify that the path is correct and try again.
-At line:1 char:1
-+ git add .
-+ ~~~
-    + CategoryInfo          : ObjectNotFound: (git:String) [], CommandNotFoundException
-    + FullyQualifiedErrorId : CommandNotFoundException
+{
+  "name": "katta",
+  "version": "1.0.0",
+  "description": "Full Stack Hangout Planner for Bengaluru",
+  "main": "server.js",
+  "scripts": {
+    "start": "json-server --watch db.json --port 3000"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
+  }
+}
