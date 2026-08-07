@@ -3,6 +3,11 @@
 **Kannada:** ಕಟ್ಟೆ — the stone bench under the tree where nobody planned to meet and everybody ends up.
 
 A simple hangout planner for Bengaluru. Enter your budget per head, area, and group size. It gives you three complete plans with the real final cost (including GST, service charge, parking, booking fees, and travel). Your group can vote on the plans using just a link no login needed.
+## Tech Stack
+- Frontend: HTML, CSS, JavaScript
+- Backend: Node.js + json-server
+- Database: JSON file (db.json)
+- This is a **Full Stack Project**
 
 **Live Demo:** https://prajwalzv.github.io/katta
 
