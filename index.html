@@ -56,7 +56,7 @@ a{color:var(--indigo)}
 .wrap{width:min(100% - 2rem,var(--maxw));margin-inline:auto}
 .mono{font-family:Khand,system-ui,sans-serif;font-variant-numeric:tabular-nums}
 .eyebrow{
-  font-family:Khand,system-ui,sans-serif;font-size:.9rem;font-weight:600;
+  font-family:Khand,sans-serif;font-size:.9rem;font-weight:600;
   letter-spacing:.13em;text-transform:uppercase;color:var(--faded);line-height:1.3;
 }
 
@@ -438,7 +438,7 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
     <p>Prices here are mid-range estimates for Bengaluru, put together from published rates and what these places actually cost through 2025 and 2026. GST sits on top of service charge, the same order a printed bill uses. Booking fees, camera charges, parking and arcade cards are all counted, because that is how a ₹300 evening quietly turns into ₹520.</p>
     <p>Getting there and back is shown under every total but kept out of your cap, since the app has no idea where you are starting from. Tick "Count the travel" and it goes in.</p>
     <p>What this is not is live pricing. Menus move, turf goes up on a Friday, and somewhere that was ₹250 last year is ₹340 now. Treat the total as a bracket, and ring ahead for anything that needs booking.</p>
-    <p><span class="kn">ಕಟ್ಟೆ</span> &nbsp;The stone bench under the tree where nobody planned to meet and everybody ends up.</p>
+    <p><span class="kn">ಕಟ್ಟೆ</span>  The stone bench under the tree where nobody planned to meet and everybody ends up.</p>
   </div>
 </footer>
 
@@ -1647,6 +1647,67 @@ function boot(){
 boot();
 
 })();
+
+/* ==================== FULL STACK BACKEND INTEGRATION ==================== */
+const API_BASE = 'http://localhost:3000/api';
+
+async function savePlanToBackend(plan) {
+    try {
+        const response = await fetch(`${API_BASE}/plans`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(plan)
+        });
+        const result = await response.json();
+        alert('✅ Plan saved to database successfully!');
+    } catch (error) {
+        alert('❌ Error: Make sure backend is running (npm start)');
+    }
+}
+
+async function voteOnPlan(planId) {
+    try {
+        await fetch(`${API_BASE}/vote`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ planId })
+        });
+        alert('✅ Vote recorded in database!');
+    } catch (error) {
+        alert('❌ Error voting. Backend not running?');
+    }
+}
+
+function addBackendButtons(planCard, planData) {
+    const container = document.createElement('div');
+    container.style.marginTop = '12px';
+    container.style.display = 'flex';
+    container.style.gap = '10px';
+
+    const saveBtn = document.createElement('button');
+    saveBtn.textContent = '💾 Save to Database';
+    saveBtn.style.padding = '8px 14px';
+    saveBtn.style.background = '#1E5B3E';
+    saveBtn.style.color = 'white';
+    saveBtn.style.border = 'none';
+    saveBtn.style.borderRadius = '6px';
+    saveBtn.style.cursor = 'pointer';
+    saveBtn.onclick = () => savePlanToBackend(planData);
+
+    const voteBtn = document.createElement('button');
+    voteBtn.textContent = '🗳️ Vote';
+    voteBtn.style.padding = '8px 14px';
+    voteBtn.style.background = '#B2332B';
+    voteBtn.style.color = 'white';
+    voteBtn.style.border = 'none';
+    voteBtn.style.borderRadius = '6px';
+    voteBtn.style.cursor = 'pointer';
+    voteBtn.onclick = () => voteOnPlan(planData.id || Date.now());
+
+    container.appendChild(saveBtn);
+    container.appendChild(voteBtn);
+    planCard.appendChild(container);
+}
 </script>
 </body>
 </html>
