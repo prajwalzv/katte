@@ -2,7 +2,7 @@
 
 **Kannada:** ಕಟ್ಟೆ — the stone bench under the tree where nobody planned to meet and everybody ends up.
 
-A simple hangout planner for Bengaluru. Enter your budget per head, area, and group size. It gives you three complete plans with the real final cost (including GST, service charge, parking, booking fees, and travel). Your group can vote on the plans using just a link — no login needed.
+A Full Stack hangout planner for Bengaluru. Enter your budget per head, area, and group size. It gives you three complete plans with the real final cost (including GST, service charge, parking, booking fees, and travel). Your group can vote on the plans using just a link — no login needed.
 
 **Live Demo:** https://prajwalzv.github.io/katta
 
@@ -14,14 +14,15 @@ A simple hangout planner for Bengaluru. Enter your budget per head, area, and gr
 
 ## Why I Built This
 
-Every friend group in Bengaluru has the same problem — “Where should we go?” The conversation drags on for days because no one wants to decide the budget or deal with the maths.
+Every friend group in Bengaluru wastes time deciding where to go. Most arguments are really about money. Katta solves this by showing real final costs and allowing group voting without any app.
 
 ## What It Does
 
 - Takes 3 inputs: budget per person, area, number of people
-- Shows exactly 3 plans with full breakdown (GST, service charge, extras, travel)
+- Shows exactly 3 plans with full breakdown
+- Saves plans to real backend database
+- Records votes in the database
 - Group voting works with a shareable link
-- Uses approval voting
 
 ## How to Run Locally (Full Stack)
 
