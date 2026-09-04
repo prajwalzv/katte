@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Katta: pick a plan, split the cost, go</title>
-<meta name="description" content="Tell it your budget, your area and how many of you there are. Katta puts three real Bengaluru plans on the table with the full bill per head, and the group votes one in.">
+<title>Katte: pick a plan, split the cost, go</title>
+<meta name="description" content="Tell it your budget, your area and how many of you there are. Katte puts three real Bengaluru plans on the table with the full bill per head, and the group votes one in.">
 <meta name="theme-color" content="#12211B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,7 +56,7 @@ a{color:var(--indigo)}
 .wrap{width:min(100% - 2rem,var(--maxw));margin-inline:auto}
 .mono{font-family:Khand,system-ui,sans-serif;font-variant-numeric:tabular-nums}
 .eyebrow{
-  font-family:Khand,sans-serif;font-size:.9rem;font-weight:600;
+  font-family:Khand,system-ui,sans-serif;font-size:.9rem;font-weight:600;
   letter-spacing:.13em;text-transform:uppercase;color:var(--faded);line-height:1.3;
 }
 
@@ -279,6 +279,33 @@ textarea,input[type=text]{width:100%;padding:.55rem .7rem;border:2px solid var(-
 .saved-item .st{font-size:.92rem;color:var(--ink-2)}
 .saved-item .pr{font-family:Khand,sans-serif;font-size:1.05rem;font-weight:700;color:var(--green)}
 
+
+/* live search results */
+.searchbox{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:.55rem}
+.searchbox input{flex:1 1 210px;min-width:0;font-family:Mukta,sans-serif;font-size:1rem}
+.hits{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.35rem;max-height:19rem;overflow-y:auto}
+.hits li{display:flex;align-items:center;gap:.7rem;padding:.5rem .6rem;border:2px solid var(--ink);background:var(--cream)}
+.hits li:hover{background:var(--turmeric)}
+.hits .hname{flex:1;min-width:0}
+.hits .hname b{display:block;font-size:1rem;font-weight:600;line-height:1.25}
+.hits .hname span{display:block;font-size:.85rem;color:var(--faded);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hits button{font-family:Khand,sans-serif;font-weight:600;letter-spacing:.04em;text-transform:uppercase;font-size:.92rem;padding:.2rem .6rem;border:2px solid var(--ink);background:var(--paper);flex:0 0 auto}
+.hits button:hover{background:var(--green);color:var(--cream)}
+.badge{
+  display:inline-block;font-family:Khand,sans-serif;font-size:.8rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;padding:.02rem .34rem;border:1.5px solid var(--ink);
+  vertical-align:middle;
+}
+.badge.open{background:var(--green);color:var(--cream)}
+.badge.shut{background:var(--cream-2);color:var(--ink)}
+.badge.unknown{background:transparent;color:var(--faded);border-color:var(--rule)}
+.badge.live{background:var(--indigo);color:var(--cream)}
+.picked-place{
+  margin-top:.55rem;padding:.55rem .7rem;border:2px solid var(--ink);background:var(--turmeric);
+  display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;
+}
+.picked-place .pp{flex:1;min-width:0;font-weight:600}
+.searching{font-size:.9rem;color:var(--faded);margin-top:.5rem}
 .empty{padding:1.4rem 0;color:var(--ink-2);font-size:1.02rem;max-width:54ch}
 .toast{
   position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(140%);
@@ -318,8 +345,8 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
 <header class="top">
   <div class="wrap">
     <div class="brand">
-      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Katta">
-        <mask id="katta-punch">
+      <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Katte">
+        <mask id="katte-punch">
           <rect width="40" height="40" fill="#000"/>
           <path d="M20 5c6.4 0 11 4.2 11 9.7 0 5.4-4.4 9.3-11 9.3S9 20.1 9 14.7C9 9.2 13.6 5 20 5z" fill="#fff"/>
           <circle cx="20" cy="13.5" r="3" fill="#000"/>
@@ -329,9 +356,9 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
           <rect x="10" y="28" width="20" height="3.6"/>
           <rect x="7" y="31.6" width="26" height="4"/>
         </g>
-        <rect width="40" height="40" fill="currentColor" mask="url(#katta-punch)"/>
+        <rect width="40" height="40" fill="currentColor" mask="url(#katte-punch)"/>
       </svg>
-      <span class="lock"><span class="kn" aria-hidden="true">ಕಟ್ಟೆ</span><b>katta</b></span>
+      <span class="lock"><span class="kn" aria-hidden="true">ಕಟ್ಟೆ</span><b>katte</b></span>
     </div>
     <button class="top-btn" id="btnSaved" type="button">Saved <span class="cnt" id="savedCount">0</span></button>
     <button class="top-btn" id="btnHow" type="button">How this works</button>
@@ -344,7 +371,7 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
   <div class="wrap">
     <p class="eyebrow">Bengaluru · no app for your friends to install</p>
     <h1>Nobody wants to decide. <em>So decide with money.</em></h1>
-    <p class="sub">Put in what you can spend <b>per head</b>, where you are and how many of you there are. Katta puts three real plans on the table with the whole bill on them. Taxes, booking fees, the auto fare, all of it. Then the group votes one in.</p>
+    <p class="sub">Put in what you can spend <b>per head</b>, where you are and how many of you there are. Katte puts three real plans on the table with the whole bill on them. Taxes, booking fees, the auto fare, all of it. Then the group votes one in.</p>
 
     <form class="slab" id="form" autocomplete="off">
       <div class="slab-in">
@@ -354,14 +381,21 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
             <label for="budget">Per head, all in</label>
             <span class="val mono" id="budgetVal">₹500</span>
           </div>
-          <input type="range" id="budget" min="0" max="2000" step="50" value="500" aria-describedby="budgetHint">
-          <div class="ticks"><span>Free</span><span>₹500</span><span>₹1,000</span><span>₹1,500</span><span>No cap</span></div>
+          <input type="range" id="budget" min="150" max="2000" step="50" value="500" aria-describedby="budgetHint">
+          <div class="ticks"><span>₹150</span><span>₹500</span><span>₹1,000</span><span>₹1,500</span><span>No cap</span></div>
           <p class="hint" id="budgetHint" style="margin-top:.35rem">This is the number you actually walk away having spent, not the menu price.</p>
         </div>
 
         <div class="field">
-          <div class="lab"><label id="areaLab">Where</label><span class="hint">Pick one</span></div>
+          <div class="lab"><label id="areaLab">Where</label><span class="hint">The usual spots</span></div>
           <div class="chips" id="areas" role="group" aria-labelledby="areaLab"></div>
+          <div class="searchbox">
+            <input type="text" id="q" placeholder="Somewhere else? Search any place in Bengaluru" aria-label="Search any place in Bengaluru" autocomplete="off">
+            <button class="act" type="button" id="qgo">Search</button>
+          </div>
+          <div id="qstatus"></div>
+          <ul class="hits" id="hits" hidden></ul>
+          <div id="chosen"></div>
         </div>
 
         <div class="field">
@@ -438,7 +472,7 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
     <p>Prices here are mid-range estimates for Bengaluru, put together from published rates and what these places actually cost through 2025 and 2026. GST sits on top of service charge, the same order a printed bill uses. Booking fees, camera charges, parking and arcade cards are all counted, because that is how a ₹300 evening quietly turns into ₹520.</p>
     <p>Getting there and back is shown under every total but kept out of your cap, since the app has no idea where you are starting from. Tick "Count the travel" and it goes in.</p>
     <p>What this is not is live pricing. Menus move, turf goes up on a Friday, and somewhere that was ₹250 last year is ₹340 now. Treat the total as a bracket, and ring ahead for anything that needs booking.</p>
-    <p><span class="kn">ಕಟ್ಟೆ</span>  The stone bench under the tree where nobody planned to meet and everybody ends up.</p>
+    <p><span class="kn">ಕಟ್ಟೆ</span> &nbsp;The stone bench under the tree where nobody planned to meet and everybody ends up.</p>
   </div>
 </footer>
 
@@ -457,6 +491,10 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
   </div>
 </dialog>
 
+<!-- If you host the site on GitHub Pages and the server somewhere else,
+     uncomment this and put your server address in.
+<script>window.KATTE_API = "https://your-app.onrender.com";</script>
+-->
 <script>
 (function(){
 "use strict";
@@ -484,17 +522,17 @@ var SPOTS = [
  short:"a VV Puram food street loop",why:"Walk the whole lane once before buying anything, then split everything six ways.",note:"Nothing gets going before 6pm. Carry some cash, the busy stalls move faster on it."},
 {id:"vidyarthi",n:"Vidyarthi Bhavan",area:"basavanagudi",slot:"meal",anchor:true,mode:"head",lo:100,hi:190,hrs:1,when:["day"],min:2,max:8,veg:true,booze:false,indoor:true,gst:5,
  short:"benne dosa at Vidyarthi Bhavan",why:"Two dosas each, coffee, out in forty minutes.",note:"Weekend morning queue runs 30–40 minutes and they will not take a booking."},
-{id:"buglerock",n:"Bugle Rock Park",area:"basavanagudi",slot:"walk",anchor:false,mode:"free",lo:0,hi:0,hrs:1,when:["day","evening"],min:2,max:30,veg:true,booze:false,indoor:false,
+{id:"buglerock",n:"Bugle Rock Park",area:"basavanagudi",slot:"walk",anchor:false,mode:"head",lo:40,hi:90,hrs:1,when:["day","evening"],min:2,max:30,veg:true,booze:false,indoor:false,
  short:"Bugle Rock at sunset",why:"A 3,000-million-year-old rock with benches on it. Free, and quiet after 6.",note:""},
-{id:"bulltemple",n:"Dodda Basavana Gudi",area:"basavanagudi",slot:"walk",anchor:false,mode:"free",lo:0,hi:40,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"bulltemple",n:"Dodda Basavana Gudi",area:"basavanagudi",slot:"walk",anchor:false,mode:"head",lo:30,hi:80,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"the Bull Temple",why:"Ten minutes, no ticket, and the walk up is the good part.",note:"Shoes off and stowed at the entrance. It shuts in the afternoon for a couple of hours."},
-{id:"gandhibazaar",n:"Gandhi Bazaar flower stretch",area:"basavanagudi",slot:"walk",anchor:false,mode:"free",lo:0,hi:60,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"gandhibazaar",n:"Gandhi Bazaar flower stretch",area:"basavanagudi",slot:"walk",anchor:false,mode:"head",lo:50,hi:120,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"the Gandhi Bazaar stretch",why:"Flowers, fruit and a hundred years of shouting. Costs nothing unless you buy mangoes.",note:""},
 
 // jayanagar, jp nagar
 {id:"cooljoint",n:"Cool Joint, 4th Block",area:"jayanagar",slot:"sweet",anchor:false,mode:"head",lo:110,hi:240,hrs:1,when:["day","evening","night"],min:2,max:10,veg:true,booze:false,indoor:true,gst:5,
  short:"a gadbad at Cool Joint",why:"One gadbad between two is the correct order and nobody listens.",note:""},
-{id:"jayanagar4",n:"4th Block shopping stretch",area:"jayanagar",slot:"walk",anchor:true,mode:"free",lo:0,hi:80,hrs:2,when:["day","evening"],min:2,max:12,veg:true,booze:false,indoor:false,
+{id:"jayanagar4",n:"4th Block shopping stretch",area:"jayanagar",slot:"walk",anchor:true,mode:"head",lo:60,hi:140,hrs:2,when:["day","evening"],min:2,max:12,veg:true,booze:false,indoor:false,
  short:"the 4th Block complex crawl",why:"Free to walk, dangerous to browse. Best done on a full stomach.",note:"Whatever you actually buy is on top of this bill. Most shops shut by 9."},
 {id:"rangashankara",n:"Ranga Shankara",area:"jayanagar",slot:"activity",anchor:true,mode:"ticket",lo:150,hi:400,hrs:2,when:["evening"],min:2,max:10,veg:true,booze:false,indoor:true,
  short:"a play at Ranga Shankara",why:"The most underrated evening in this city, and it starts at ₹150.",note:"Shows start 7:30 sharp and they do not seat latecomers. Book on their site, because the cheap seats go first."},
@@ -504,26 +542,26 @@ var SPOTS = [
  short:"benne masala dosa at CTR",why:"The dosa everyone else is imitating. Order one extra before you think you want it.",note:"Peak wait runs 20 to 30 minutes and there is no list, so you hover."},
 {id:"veenastores",n:"Veena Stores",area:"malleshwaram",slot:"meal",anchor:true,mode:"head",lo:70,hi:150,hrs:1,when:["day"],min:2,max:6,veg:true,booze:false,indoor:true,
  short:"idlis standing up at Veena Stores",why:"Idli, kharabath, coffee. Standing room only and it costs less than an auto.",note:"They run out and shut by late morning. This is a breakfast plan or it is nothing."},
-{id:"sampige",n:"Sampige Road & 8th Cross",area:"malleshwaram",slot:"walk",anchor:false,mode:"free",lo:0,hi:60,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"sampige",n:"Sampige Road & 8th Cross",area:"malleshwaram",slot:"walk",anchor:false,mode:"head",lo:50,hi:110,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"the 8th Cross market walk",why:"Old Malleshwaram doing its evening thing. Free unless the flower seller gets you.",note:""},
-{id:"sankey",n:"Sankey Tank",area:"malleshwaram",slot:"walk",anchor:true,mode:"free",lo:0,hi:20,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"sankey",n:"Sankey Tank",area:"malleshwaram",slot:"walk",anchor:true,mode:"head",lo:40,hi:90,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"a loop around Sankey Tank",why:"One lap is about 3km, and the sunset side gets crowded for a reason.",note:"Gates shut around 8pm."},
-{id:"iskcon",n:"ISKCON Rajajinagar",area:"malleshwaram",slot:"activity",anchor:true,mode:"free",lo:0,hi:60,hrs:2,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:true,
+{id:"iskcon",n:"ISKCON Rajajinagar",area:"malleshwaram",slot:"activity",anchor:true,mode:"head",lo:40,hi:100,hrs:2,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:true,
  short:"the ISKCON hill climb",why:"Free to enter. The queue, the view and the prasadam are the whole plan.",note:"Weekend evenings are shoulder-to-shoulder. Phones and shoes go into the counter before you go up."},
 
 // the middle of town
-{id:"cubbon",n:"Cubbon Park",area:"central",slot:"walk",anchor:true,mode:"free",lo:0,hi:0,hrs:2,when:["day"],min:2,max:30,veg:true,booze:false,indoor:false,
+{id:"cubbon",n:"Cubbon Park",area:"central",slot:"walk",anchor:true,mode:"head",lo:50,hi:110,hrs:2,when:["day"],min:2,max:30,veg:true,booze:false,indoor:false,
  short:"a Cubbon Park sit-down",why:"Bring a mat and something to eat and you have spent nothing.",note:"Cars are barred on Sundays, which is exactly when to go."},
 {id:"blossom",n:"Blossom Book House",area:"central",slot:"activity",anchor:true,mode:"head",lo:0,hi:600,hrs:1,when:["day","evening"],min:2,max:8,veg:true,booze:false,indoor:true,
  short:"an hour lost in Blossom",why:"Free to browse three floors. Nobody has ever left with zero books.",note:"Second-hand section upstairs is roughly half the price of the ground floor."},
 {id:"koshys",n:"Koshy's",area:"central",slot:"meal",anchor:true,mode:"head",lo:350,hi:650,hrs:2,when:["day","evening","night"],min:2,max:8,veg:false,booze:true,indoor:true,gst:5,
  short:"a long sit at Koshy's",why:"Slow service is the format, not a bug. Order coffee and stay two hours.",note:"The old side and the air-conditioned side have different prices for the same food."},
-{id:"rangoli",n:"Rangoli Metro Art Centre",area:"central",slot:"activity",anchor:true,mode:"free",lo:0,hi:80,hrs:1,when:["day","evening"],min:2,max:12,veg:true,booze:false,indoor:true,
+{id:"rangoli",n:"Rangoli Metro Art Centre",area:"central",slot:"activity",anchor:true,mode:"head",lo:40,hi:100,hrs:1,when:["day","evening"],min:2,max:12,veg:true,booze:false,indoor:true,
  short:"whatever is on at Rangoli",why:"Sits on top of MG Road metro, costs nothing, and the programme changes weekly.",note:"Check what is showing before you go. Some weeks it is an empty corridor."},
 {id:"palace",n:"Bangalore Palace",area:"central",slot:"activity",anchor:true,mode:"ticket",lo:260,hi:320,hrs:2,when:["day"],min:2,max:12,veg:true,booze:false,indoor:true,
  extras:[{label:"Camera / phone photography",amt:280,per:"group"}],
  short:"Bangalore Palace",why:"Audio guide is in the ticket. The photography charge is not.",note:"The camera fee is per device and they do check. One phone between you is the trick."},
-{id:"churchst",n:"Church Street after dark",area:"central",slot:"walk",anchor:false,mode:"free",lo:0,hi:0,hrs:1,when:["evening","night"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"churchst",n:"Church Street after dark",area:"central",slot:"walk",anchor:false,mode:"head",lo:60,hi:130,hrs:1,when:["evening","night"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"a Church Street wander",why:"Cobbles, buskers, bookshops. The walk is the plan.",note:""},
 {id:"matteo",n:"A Church Street coffee",area:"central",slot:"coffee",anchor:false,mode:"head",lo:220,hi:420,hrs:1,when:["day","evening"],min:2,max:8,veg:true,booze:false,indoor:true,gst:5,
  short:"coffee on Church Street",why:"Somewhere to sit and argue about where to go next.",note:""},
@@ -535,7 +573,7 @@ var SPOTS = [
  short:"an escape room",why:"Sixty minutes where nobody looks at their phone. Rare.",note:"Book the slot online, walk-ins rarely get a room, and rates drop per head once you are five or more."},
 {id:"cornerhouse",n:"Corner House",area:"indiranagar",slot:"sweet",anchor:false,mode:"head",lo:170,hi:330,hrs:1,when:["day","evening","night"],min:2,max:10,veg:true,booze:false,indoor:true,gst:5,
  short:"a Death by Chocolate",why:"One DBC between two people. This is not a suggestion.",note:"The queue after 8pm on a weekend is a full twenty minutes."},
-{id:"hundredft",n:"100 Feet Road stretch",area:"indiranagar",slot:"walk",anchor:false,mode:"free",lo:0,hi:0,hrs:1,when:["evening","night"],min:2,max:12,veg:true,booze:false,indoor:false,
+{id:"hundredft",n:"100 Feet Road stretch",area:"indiranagar",slot:"walk",anchor:false,mode:"head",lo:50,hi:120,hrs:1,when:["evening","night"],min:2,max:12,veg:true,booze:false,indoor:false,
  short:"the 100 Feet Road walk",why:"Window shopping you cannot afford, which is free.",note:""},
 
 // koramangala
@@ -550,7 +588,7 @@ var SPOTS = [
  short:"board games over coffee",why:"The games are free with the table. You are paying for permission to sit.",note:"They expect one order per person, and the good games get taken by 7pm."},
 
 // hsr
-{id:"agara",n:"Agara Lake",area:"hsr",slot:"walk",anchor:true,mode:"free",lo:0,hi:0,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"agara",n:"Agara Lake",area:"hsr",slot:"walk",anchor:true,mode:"head",lo:40,hi:90,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"a lap of Agara Lake",why:"Actual open sky in south-east Bengaluru. Costs nothing.",note:"Gates close by 7pm."},
 
 // kammanahalli
@@ -558,7 +596,7 @@ var SPOTS = [
  short:"the Kammanahalli food stretch",why:"Rolls, kebabs and shawarma within one signal of each other.",note:"This is a late plan. Most of it peaks after 9pm."},
 
 // out east
-{id:"phoenix",n:"Phoenix Marketcity",area:"whitefield",slot:"activity",anchor:true,mode:"free",lo:0,hi:120,hrs:3,when:["day","evening","night"],min:2,max:12,veg:true,booze:true,indoor:true,
+{id:"phoenix",n:"Phoenix Marketcity",area:"whitefield",slot:"activity",anchor:true,mode:"head",lo:90,hi:200,hrs:3,when:["day","evening","night"],min:2,max:12,veg:true,booze:true,indoor:true,
  extras:[{label:"Parking",amt:80,per:"group"}],
  short:"a Phoenix afternoon",why:"Free to walk around, which lasts about forty minutes before the food court.",note:"Parking is charged by the hour and the weekend rate is higher."},
 
@@ -609,13 +647,13 @@ var SPOTS = [
  short:"a morning in Lalbagh",why:"Costs less than a coffee and there is a lake in the middle of it.",note:"Go in through the Double Road gate for the glass house. It gets hot after 10am."},
 {id:"mtr",n:"MTR, Lalbagh Road",area:"basavanagudi",slot:"meal",anchor:true,mode:"head",lo:220,hi:400,hrs:1,when:["day","evening"],min:2,max:8,veg:true,booze:false,indoor:true,gst:5,
  short:"a rava idli at MTR",why:"They shut between meals, so turn up at the right hour or don't bother.",note:"Closed in the afternoon between lunch and evening tiffin. Weekend queues are long and orderly."},
-{id:"ulsoor",n:"Ulsoor Lake",area:"indiranagar",slot:"walk",anchor:true,mode:"free",lo:0,hi:0,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"ulsoor",n:"Ulsoor Lake",area:"indiranagar",slot:"walk",anchor:true,mode:"head",lo:40,hi:90,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"a lap of Ulsoor Lake",why:"Boats, birds and a walking path, all for nothing.",note:"The gates shut around 6, earlier than you would expect."},
-{id:"freedompark",n:"Freedom Park",area:"central",slot:"walk",anchor:true,mode:"free",lo:0,hi:20,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"freedompark",n:"Freedom Park",area:"central",slot:"walk",anchor:true,mode:"head",lo:40,hi:90,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"an hour in Freedom Park",why:"An old jail turned into a park. Open late-ish and almost always empty.",note:""},
-{id:"vidhana",n:"Vidhana Soudha lit up",area:"central",slot:"walk",anchor:true,mode:"free",lo:0,hi:0,hrs:1,when:["evening","night"],min:2,max:20,veg:true,booze:false,indoor:false,
+{id:"vidhana",n:"Vidhana Soudha lit up",area:"central",slot:"walk",anchor:true,mode:"head",lo:40,hi:90,hrs:1,when:["evening","night"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"Vidhana Soudha lit up",why:"Free, ten minutes, and it is the single best-looking thing in the city at night.",note:"They only switch the lights on for Sunday and holiday evenings. Photos from the road only."},
-{id:"commercialst",n:"Commercial Street",area:"central",slot:"walk",anchor:true,mode:"free",lo:0,hi:80,hrs:2,when:["day","evening"],min:2,max:12,veg:true,booze:false,indoor:false,
+{id:"commercialst",n:"Commercial Street",area:"central",slot:"walk",anchor:true,mode:"head",lo:60,hi:140,hrs:2,when:["day","evening"],min:2,max:12,veg:true,booze:false,indoor:false,
  short:"a Commercial Street walk",why:"Free until somebody starts bargaining, and then it isn't.",note:"Most shops shut by 9 and there is nowhere to park, so come by metro."},
 {id:"shivajinagar",n:"Shivajinagar street food",area:"central",slot:"meal",anchor:true,mode:"head",lo:150,hi:340,hrs:2,when:["evening","night"],min:2,max:12,veg:false,booze:false,indoor:false,
  short:"the Shivajinagar food lanes",why:"Kebabs and rolls done properly, for a third of what a restaurant charges.",note:"Busiest and best after 8. It is cash-first and shoulder-to-shoulder."},
@@ -954,17 +992,32 @@ var store = {
   }
 };
 
-var opts = {budget: 500, area: "any", n: 4, when: "evening", veg: false, sober: false, indoor: false, single: false, travel: false};
+/* Point this at your deployed server if the page is on GitHub Pages.
+   Left empty it talks to whatever origin served the page. */
+var API = (window.KATTE_API || "").replace(/\/$/, "");
+var liveOn = false;
+
+function api(path, options){
+  return fetch(API + path, options).then(function(r){
+    return r.json().then(function(body){
+      if(!r.ok) throw new Error(body.message || body.error || ("Server said " + r.status));
+      return body;
+    });
+  });
+}
+
+var opts = {place: null, budget: 500, area: "any", n: 4, when: "evening", veg: false, sober: false, indoor: false, single: false, travel: false};
 var seed = Math.floor(Math.random() * 100000);
 var current = [];
 var shortlist = [];
 var saved = [];
 var voteMode = "phone";
+var ballotId = null;
 var voters = [];
 var passIndex = 0;
 var passMarks = [];
 
-try{ saved = JSON.parse(store.get("katta.saved") || "[]"); }catch(e){ saved = []; }
+try{ saved = JSON.parse(store.get("katte.saved") || "[]"); }catch(e){ saved = []; }
 if(!Array.isArray(saved)) saved = [];
 
 function $(id){ return document.getElementById(id); }
@@ -1011,14 +1064,17 @@ var FILTERS = [
 
 function buildControls(){
   var areas = $("areas");
+  /* the handful people actually name when somebody asks where to meet */
+  var famous = ["central","indiranagar","koramangala","basavanagudi","jayanagar","malleshwaram","outskirts"];
   var list = [{k:"any", n:"Anywhere in the city"}];
-  for(var key in AREAS) list.push({k: key, n: AREAS[key].n});
+  famous.forEach(function(k){ if(AREAS[k]) list.push({k:k, n:AREAS[k].n}); });
   list.forEach(function(a){
     var b = el("button","chip",a.n);
     b.type = "button";
     b.setAttribute("aria-pressed", String(opts.area === a.k));
     b.addEventListener("click", function(){
       opts.area = a.k;
+      clearChosen();
       Array.prototype.forEach.call(areas.children, function(c){ c.setAttribute("aria-pressed","false"); });
       b.setAttribute("aria-pressed","true");
     });
@@ -1053,7 +1109,191 @@ function buildControls(){
   });
 }
 
-function budgetLabel(v){ return v >= 2000 ? "No cap" : (v === 0 ? "Free only" : money(v)); }
+/* ---------- live search over the whole city ---------- */
+function statusBadge(p){
+  if(p.openNow === true)  return {cls:"open",    txt:"open now"};
+  if(p.openNow === false) return {cls:"shut",    txt:"closed now"};
+  return {cls:"unknown", txt:"hours unknown"};
+}
+
+function renderHits(places, q){
+  var ul = $("hits");
+  clear(ul);
+  if(!places.length){
+    ul.hidden = true;
+    $("qstatus").innerHTML = "";
+    $("qstatus").appendChild(el("p","searching",'Nothing in Bengaluru came back for "' + q + '". Try the plain name of the place.'));
+    return;
+  }
+  /* whatever is open right now goes to the top, but closed places still show */
+  places.sort(function(a,b){
+    var rank = function(x){ return x.openNow === true ? 0 : x.openNow === null ? 1 : 2; };
+    return rank(a) - rank(b);
+  });
+  places.slice(0,10).forEach(function(p){
+    var li = el("li");
+    var nm = el("div","hname");
+    var b = el("b");
+    b.appendChild(document.createTextNode(p.name + " "));
+    var sb = statusBadge(p);
+    b.appendChild(el("span","badge " + sb.cls, sb.txt));
+    nm.appendChild(b);
+    var bits = [];
+    if(p.address) bits.push(p.address);
+    if(p.rating) bits.push(p.rating.toFixed(1) + "\u2605" + (p.reviews ? " (" + p.reviews + ")" : ""));
+    bits.push("about " + money(p.perHead) + " a head");
+    nm.appendChild(el("span", null, bits.join("  \u00b7  ")));
+    li.appendChild(nm);
+    var use = el("button", null, "Use this");
+    use.type = "button";
+    use.addEventListener("click", function(){ choosePlace(p); });
+    li.appendChild(use);
+    ul.appendChild(li);
+  });
+  ul.hidden = false;
+  $("qstatus").innerHTML = "";
+}
+
+function doSearch(){
+  var q = $("q").value.trim();
+  if(q.length < 2){ toast("Type at least two letters"); return; }
+  $("hits").hidden = true;
+  $("qstatus").innerHTML = "";
+  $("qstatus").appendChild(el("p","searching","Asking Google about " + q + "\u2026"));
+
+  api("/api/places/search?q=" + encodeURIComponent(q)).then(function(res){
+    renderHits(res.places || [], q);
+  }).catch(function(e){
+    $("qstatus").innerHTML = "";
+    var msg = /no_key|Failed to fetch|NetworkError/i.test(e.message)
+      ? "Live search needs the server running. Start it with npm start, or use the areas above."
+      : e.message;
+    $("qstatus").appendChild(el("p","searching", msg));
+  });
+}
+
+function clearChosen(){
+  opts.place = null;
+  clear($("chosen"));
+  $("hits").hidden = true;
+}
+
+function choosePlace(p){
+  opts.place = p;
+  opts.area = "any";
+  Array.prototype.forEach.call($("areas").children, function(c){ c.setAttribute("aria-pressed","false"); });
+  $("hits").hidden = true;
+  $("q").value = "";
+  var box = $("chosen");
+  clear(box);
+  var d = el("div","picked-place");
+  var sb = statusBadge(p);
+  var t = el("div","pp");
+  t.appendChild(document.createTextNode("Building plans around " + p.name + " "));
+  t.appendChild(el("span","badge " + sb.cls, sb.txt));
+  d.appendChild(t);
+  var x = el("button","act","Change");
+  x.type = "button";
+  x.addEventListener("click", function(){ clearChosen(); });
+  d.appendChild(x);
+  box.appendChild(d);
+}
+
+/* A plan built from live Google data rather than the built in list */
+function livePlan(anchor, extra, n){
+  var stops = [anchor];
+  if(extra) stops.push(extra);
+  var lines = [], sum = 0;
+  stops.forEach(function(st){
+    lines.push({t: st.name, a: st.perHead, kind:"base"});
+    sum += st.perHead;
+  });
+  if(opts.travel){
+    var t = Math.max(60, r5(90));
+    lines.push({t:"Getting there and back", a:t, kind:"tax"});
+    sum += t;
+  }
+  var perHead = Math.round(sum);
+  var title = anchor.name + (extra ? ", then " + extra.name : "");
+  return {
+    ids: stops.map(function(x){ return x.id; }),
+    stops: stops.map(function(x){
+      return {
+        n: x.name, area:"*", why: x.rating ? ("Rated " + x.rating.toFixed(1) + " on Google" + (x.reviews ? " from " + x.reviews + " reviews" : "") + ".") : "Live from Google Maps.",
+        note: x.openNow === false ? "Google says this is closed right now, so check before you leave." : "",
+        hrs: 2, perHead: x.perHead, openNow: x.openNow, live: true
+      };
+    }),
+    title: title.charAt(0).toUpperCase() + title.slice(1),
+    area: null, hours: extra ? 4 : 2,
+    bill: {lines: lines, perHead: perHead, group: perHead * n, travel: 0, advisory: null},
+    fit: opts.budget >= 2000 ? "No cap set, so this is just what it costs."
+       : (perHead <= opts.budget ? "About " + money(opts.budget - perHead) + " under your cap." : "Runs about " + money(perHead - opts.budget) + " over."),
+    heads: "Costs here are estimated from Google's price level, so treat them as a rough bracket.",
+    over: opts.budget < 2000 && perHead > opts.budget,
+    live: true
+  };
+}
+
+function runLive(){
+  var p = opts.place, n = opts.n;
+  var res = $("results");
+  res.hidden = false;
+  clear($("cards"));
+  $("resHead").textContent = "Building around " + p.name;
+  $("resMeta").textContent = "live from Google Maps";
+  $("cards").appendChild(el("div","empty","Looking for places near " + p.name + "\u2026"));
+
+  var kinds = p.slot === "meal" ? ["ice_cream_shop","cafe","park"]
+            : p.slot === "walk" ? ["cafe","restaurant","ice_cream_shop"]
+            : ["cafe","restaurant","park"];
+
+  Promise.all(kinds.map(function(k){
+    return api("/api/places/nearby?lat=" + p.lat + "&lng=" + p.lng + "&kind=" + k)
+      .then(function(r){ return r.places || []; })
+      .catch(function(){ return []; });
+  })).then(function(sets){
+    /* pool every nearby place, drop repeats, then pair the cheapest ones
+       with the anchor until there are three plans or we run out */
+    var pool = [], seen = {};
+    sets.forEach(function(set){
+      set.forEach(function(c){
+        if(c.id === p.id || seen[c.id]) return;
+        seen[c.id] = true;
+        pool.push(c);
+      });
+    });
+    pool.sort(function(a,b){ return a.perHead - b.perHead; });
+
+    var plans = [];
+    for(var i=0;i<pool.length && plans.length < 3;i++){
+      var plan = livePlan(p, pool[i], n);
+      if(opts.budget < 2000 && plan.bill.perHead > opts.budget) continue;
+      plans.push(plan);
+    }
+    /* the place on its own counts as a plan, if the budget allows it */
+    var solo = livePlan(p, null, n);
+    if(opts.budget >= 2000 || solo.bill.perHead <= opts.budget) plans.unshift(solo);
+
+    current = plans.slice(0,3);
+    clear($("cards"));
+    $("resMeta").textContent = budgetLabel(opts.budget) + " a head  ·  live from Google Maps";
+    if(!current.length){
+      $("resHead").textContent = "Too expensive";
+      $("cards").appendChild(el("div","empty",
+        p.name + " works out to about " + money(solo.bill.perHead) + " a head on its own, which is over your " +
+        money(opts.budget) + " cap. Raise the cap, or pick somewhere cheaper."));
+      return;
+    }
+    $("resHead").textContent = current.length > 1 ? "On the table" : "What fits";
+    renderCards();
+  }).catch(function(){
+    clear($("cards"));
+    $("cards").appendChild(el("div","empty","Could not reach the server for nearby places. Pick an area above instead."));
+  });
+}
+
+function budgetLabel(v){ return v >= 2000 ? "No cap" : money(v); }
 
 function bindControls(){
   var b = $("budget");
@@ -1069,6 +1309,10 @@ function bindControls(){
     run();
   });
   $("reroll").addEventListener("click", function(){ seed++; run(true); });
+  $("qgo").addEventListener("click", doSearch);
+  $("q").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ e.preventDefault(); doSearch(); }
+  });
   $("btnHow").addEventListener("click", function(){ $("howDlg").showModal(); });
   $("howClose").addEventListener("click", function(){ $("howDlg").close(); });
   $("btnSaved").addEventListener("click", function(){
@@ -1097,8 +1341,16 @@ function renderStops(plan){
     nm.appendChild(where);
     li.appendChild(nm);
     li.appendChild(el("div","why", s.why));
-    var c = stopCost(s, opts.n);
-    li.appendChild(el("div","cost", c.total < 1 ? "free" : money(c.total) + " a head"));
+    if(s.live){
+      var lc = el("div","cost");
+      lc.appendChild(document.createTextNode("about " + money(s.perHead) + " a head  "));
+      if(s.openNow === true) lc.appendChild(el("span","badge open","open now"));
+      else if(s.openNow === false) lc.appendChild(el("span","badge shut","closed now"));
+      li.appendChild(lc);
+    } else {
+      var c = stopCost(s, opts.n);
+      li.appendChild(el("div","cost", money(c.total) + " a head"));
+    }
     ul.appendChild(li);
   });
   return ul;
@@ -1165,6 +1417,7 @@ function renderCard(plan, idx){
 
   var top = el("div","card-top");
   var eyebrowBits = [];
+  if(plan.live) eyebrowBits.push("live from Google");
   eyebrowBits.push(WHENS.filter(function(w){ return w.k === opts.when; })[0].l);
   if(plan.area) eyebrowBits.push(AREAS[plan.area].n);
   eyebrowBits.push("about " + plan.hours + (plan.hours === 1 ? " hour" : " hours"));
@@ -1207,7 +1460,7 @@ function renderCard(plan, idx){
     saved.forEach(function(p,i){ if(p.ids.join(",") === key) at = i; });
     if(at >= 0) saved.splice(at,1);
     else saved.push({ids: plan.ids, n: opts.n, title: plan.title, perHead: plan.bill.perHead});
-    store.set("katta.saved", JSON.stringify(saved));
+    store.set("katte.saved", JSON.stringify(saved));
     renderSaved();
     renderCards();
   });
@@ -1221,7 +1474,7 @@ function renderCard(plan, idx){
     current[idx] = fresh;
     renderCards();
   });
-  if(!opts.single) acts.appendChild(swap);
+  if(!opts.single && !plan.live) acts.appendChild(swap);
 
   card.appendChild(acts);
   return card;
@@ -1237,6 +1490,7 @@ function renderCards(){
 }
 
 function run(quiet){
+  if(opts.place){ runLive(); return; }
   var out = generate(opts, seed);
   var res = $("results");
 
@@ -1245,10 +1499,8 @@ function run(quiet){
     clear($("cards"));
     var e = el("div","empty");
     var why;
-    if(opts.budget === 0){
-      why = "Nothing is free " + (opts.when === "night" ? "this late" : "at that time") +
-            (opts.area === "any" ? "" : " in " + AREAS[opts.area].n) +
-            " for " + opts.n + " of you. The parks and lakes shut by evening. Nudge the cap to ₹150 and chai-and-a-walk plans open up.";
+    if(false){
+      why = "";
     } else if(opts.when === "night"){
       why = "Not much is open late for " + money(opts.budget) + " a head" +
             (opts.area === "any" ? "" : " in " + AREAS[opts.area].n) +
@@ -1315,7 +1567,7 @@ function renderSaved(){
     del.type = "button";
     del.addEventListener("click", function(){
       saved = saved.filter(function(x){ return x.ids.join(",") !== p.ids.join(","); });
-      store.set("katta.saved", JSON.stringify(saved));
+      store.set("katte.saved", JSON.stringify(saved));
       renderSaved(); renderCards();
     });
     row.appendChild(del);
@@ -1448,39 +1700,99 @@ function shareUrl(){
 }
 
 function renderLinkVote(body){
-  body.appendChild(el("p","lead","Send this link to the group. Whoever opens it marks what they are fine with and gets a two-character code to paste back into the chat. No app, no login, works on any phone."));
+  body.appendChild(el("p","lead","This saves the shortlist on the server and gives you one link. Everyone opens it, ticks what they are fine with, and the votes come straight back here. Nobody signs up for anything."));
 
-  var url = shareUrl();
-  var box = el("textarea");
-  box.rows = 3;
-  box.readOnly = true;
-  box.value = url;
-  box.style.marginTop = ".9rem";
-  body.appendChild(box);
-
+  var out = el("div");
   var row = el("div","row");
-  var copy = el("button","act primary","Copy the link");
-  copy.type = "button";
-  copy.addEventListener("click", function(){ copyText(url, "Link copied. Paste it in the group."); });
-  row.appendChild(copy);
+  var go = el("button","act primary","Make the voting link");
+  go.type = "button";
+  go.addEventListener("click", function(){
+    go.disabled = true;
+    go.textContent = "Saving\u2026";
+    api("/api/plans", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        people: opts.n, budget: opts.budget,
+        area: opts.place ? opts.place.name : (opts.area === "any" ? "Anywhere" : AREAS[opts.area].n),
+        plans: shortlist.map(function(pl){
+          return {title: pl.title, perHead: pl.bill.perHead, stops: pl.stops.map(function(x){ return x.n; })};
+        })
+      })
+    }).then(function(res){
+      ballotId = res.id;
+      go.remove();
+      renderShareBox(out, res.id);
+    }).catch(function(e){
+      go.disabled = false;
+      go.textContent = "Make the voting link";
+      clear(out);
+      var why = /Failed to fetch|NetworkError/i.test(e.message)
+        ? "The server is not running, so the ballot cannot be saved. Start it with npm start, or use pass the phone instead."
+        : e.message;
+      out.appendChild(el("p","mini", why));
+    });
+  });
+  row.appendChild(go);
+  body.appendChild(row);
+  body.appendChild(out);
+}
 
-  var msg = "Vote on tonight:\n" + shortlist.map(function(p, i){
+function renderShareBox(out, id){
+  clear(out);
+  var url = location.href.split("#")[0] + "#v=" + id;
+  var box = el("textarea");
+  box.rows = 2; box.readOnly = true; box.value = url;
+  out.appendChild(box);
+
+  var msg = "Vote on this:\n" + shortlist.map(function(p,i){
     return (i+1) + ". " + p.title + ", " + money(p.bill.perHead) + " a head";
   }).join("\n") + "\n\n" + url;
 
+  var r = el("div","row");
+  var c = el("button","act primary","Copy the link");
+  c.type = "button";
+  c.addEventListener("click", function(){ copyText(url, "Link copied. Paste it in the group."); });
+  r.appendChild(c);
   var wa = el("a","act","Send on WhatsApp");
   wa.href = "https://wa.me/?text=" + encodeURIComponent(msg);
-  wa.target = "_blank";
-  wa.rel = "noopener";
-  row.appendChild(wa);
+  wa.target = "_blank"; wa.rel = "noopener";
+  r.appendChild(wa);
+  var refresh = el("button","act","Check the votes");
+  refresh.type = "button";
+  refresh.addEventListener("click", function(){ showServerTally(out, id); });
+  r.appendChild(refresh);
+  out.appendChild(r);
+  out.appendChild(el("p","mini","Ballot code " + id + ". Hit check the votes whenever you want the running count."));
+}
 
-  var copyMsg = el("button","act","Copy the whole message");
-  copyMsg.type = "button";
-  copyMsg.addEventListener("click", function(){ copyText(msg, "Message copied"); });
-  row.appendChild(copyMsg);
-  body.appendChild(row);
-
-  body.appendChild(el("p","mini","When the codes start coming back, switch to " + '"' + "Count the codes" + '"' + " and paste the chat in."));
+function showServerTally(out, id){
+  api("/api/plans/" + id + "/votes").then(function(t){
+    var old = out.querySelector(".server-tally");
+    if(old) old.remove();
+    var wrap = el("div","server-tally");
+    if(!t.voters.length){
+      wrap.appendChild(el("p","mini","Nobody has voted yet."));
+      out.appendChild(wrap);
+      return;
+    }
+    wrap.appendChild(el("h3", null, t.top === 0 ? "Nobody wanted any of them" : "Result"));
+    var ul = el("ul","tally");
+    t.plans.forEach(function(pl, i){
+      var li = el("li");
+      if(i === t.winner) li.className = "win";
+      li.appendChild(el("span","tn", pl.title));
+      li.appendChild(el("span","tc", t.scores[i] + " of " + t.voters.length + "  \u00b7  " + money(pl.perHead)));
+      var bar = el("div","bar"), fill = el("i");
+      fill.style.width = (t.scores[i] / t.voters.length * 100) + "%";
+      bar.appendChild(fill); li.appendChild(bar);
+      ul.appendChild(li);
+    });
+    wrap.appendChild(ul);
+    wrap.appendChild(el("p","mini","Voted so far: " + t.voters.join(", ")));
+    if(t.brokeTie) wrap.appendChild(el("p","mini","It tied, so the cheaper plan took it."));
+    out.appendChild(wrap);
+  }).catch(function(e){ toast(e.message); });
 }
 
 function renderCountVote(body){
@@ -1630,6 +1942,80 @@ function renderVoterView(data){
   panel.appendChild(out);
 }
 
+function renderServerVoter(row){
+  document.querySelector(".hero").hidden = true;
+  $("savedSection").hidden = true;
+  $("voteSection").hidden = false;
+  var panel = $("votePanel");
+  clear(panel);
+
+  panel.appendChild(el("h3", null, "Somebody wants your vote"));
+  panel.appendChild(el("p","lead", row.plans.length + " plans, for " + row.people + " people" + (row.area ? " around " + row.area : "") + ". Tick anything you would be happy with, not only your favourite."));
+
+  var nameRow = el("div","row");
+  var input = el("input");
+  input.type = "text"; input.placeholder = "Your name"; input.style.maxWidth = "220px";
+  nameRow.appendChild(input);
+  panel.appendChild(nameRow);
+
+  var marks = [];
+  var ul = el("ul","ballot");
+  row.plans.forEach(function(pl, i){
+    var li = el("li");
+    var nm = el("div","bname");
+    nm.appendChild(el("b", null, pl.title));
+    nm.appendChild(el("span", null, money(pl.perHead) + " a head" + (pl.stops && pl.stops.length ? "  \u00b7  " + pl.stops.join(", ") : "")));
+    li.appendChild(nm);
+    var yn = el("div","yn");
+    var yes = el("button", null, "In"), no = el("button","no","Out");
+    yes.type = "button"; no.type = "button";
+    yes.addEventListener("click", function(){
+      marks[i] = true; yes.setAttribute("aria-pressed","true"); no.setAttribute("aria-pressed","false");
+    });
+    no.addEventListener("click", function(){
+      marks[i] = false; no.setAttribute("aria-pressed","true"); yes.setAttribute("aria-pressed","false");
+    });
+    yn.appendChild(yes); yn.appendChild(no);
+    li.appendChild(yn);
+    ul.appendChild(li);
+  });
+  panel.appendChild(ul);
+
+  var out = el("div");
+  var row2 = el("div","row");
+  var send = el("button","act primary","Send my vote");
+  send.type = "button";
+  send.addEventListener("click", function(){
+    if(!input.value.trim()){ toast("Put your name in first"); input.focus(); return; }
+    var picks = [];
+    for(var i=0;i<row.plans.length;i++) if(marks[i] === true) picks.push(i);
+    send.disabled = true; send.textContent = "Sending\u2026";
+    api("/api/plans/" + row.id + "/votes", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({name: input.value.trim(), picks: picks})
+    }).then(function(){
+      clear(out);
+      var okBox = el("div","code-out");
+      okBox.appendChild(el("p","mini","Vote recorded. You can close this now."));
+      okBox.appendChild(el("div","big","Thanks"));
+      out.appendChild(okBox);
+      shortlist = row.plans.map(function(pl){ return {title: pl.title, bill:{perHead: pl.perHead}}; });
+      showServerTally(out, row.id);
+    }).catch(function(e){
+      send.disabled = false; send.textContent = "Send my vote";
+      toast(e.message);
+    });
+  });
+  row2.appendChild(send);
+  var mine = el("button","act","I want my own plans");
+  mine.type = "button";
+  mine.addEventListener("click", function(){ location.hash = ""; location.reload(); });
+  row2.appendChild(mine);
+  panel.appendChild(row2);
+  panel.appendChild(out);
+}
+
 function boot(){
   buildControls();
   bindControls();
@@ -1637,7 +2023,21 @@ function boot(){
   $("budgetVal").textContent = budgetLabel(opts.budget);
   renderSaved();
 
+  api("/api/health").then(function(h2){
+    liveOn = Boolean(h2.liveSearch);
+    if(!liveOn) $("q").placeholder = "Live search needs an API key set on the server";
+  }).catch(function(){
+    liveOn = false;
+    $("q").placeholder = "Search needs the server running. Try npm start.";
+  });
+
   var h = location.hash || "";
+  if(h.indexOf("#v=") === 0){
+    var vid = h.slice(3).toUpperCase().replace(/[^A-Z0-9]/g,"");
+    api("/api/plans/" + vid).then(function(row){ renderServerVoter(row); })
+      .catch(function(){ toast("That ballot could not be loaded, so here is a fresh start."); });
+    return;
+  }
   if(h.indexOf("#s=") === 0){
     var data = rehydrate(decodeShare(h.slice(3)));
     if(data){ renderVoterView(data); return; }
@@ -1647,67 +2047,6 @@ function boot(){
 boot();
 
 })();
-
-/* ==================== FULL STACK BACKEND INTEGRATION ==================== */
-const API_BASE = 'http://localhost:3000/api';
-
-async function savePlanToBackend(plan) {
-    try {
-        const response = await fetch(`${API_BASE}/plans`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(plan)
-        });
-        const result = await response.json();
-        alert('✅ Plan saved to database successfully!');
-    } catch (error) {
-        alert('❌ Error: Make sure backend is running (npm start)');
-    }
-}
-
-async function voteOnPlan(planId) {
-    try {
-        await fetch(`${API_BASE}/vote`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ planId })
-        });
-        alert('✅ Vote recorded in database!');
-    } catch (error) {
-        alert('❌ Error voting. Backend not running?');
-    }
-}
-
-function addBackendButtons(planCard, planData) {
-    const container = document.createElement('div');
-    container.style.marginTop = '12px';
-    container.style.display = 'flex';
-    container.style.gap = '10px';
-
-    const saveBtn = document.createElement('button');
-    saveBtn.textContent = '💾 Save to Database';
-    saveBtn.style.padding = '8px 14px';
-    saveBtn.style.background = '#1E5B3E';
-    saveBtn.style.color = 'white';
-    saveBtn.style.border = 'none';
-    saveBtn.style.borderRadius = '6px';
-    saveBtn.style.cursor = 'pointer';
-    saveBtn.onclick = () => savePlanToBackend(planData);
-
-    const voteBtn = document.createElement('button');
-    voteBtn.textContent = '🗳️ Vote';
-    voteBtn.style.padding = '8px 14px';
-    voteBtn.style.background = '#B2332B';
-    voteBtn.style.color = 'white';
-    voteBtn.style.border = 'none';
-    voteBtn.style.borderRadius = '6px';
-    voteBtn.style.cursor = 'pointer';
-    voteBtn.onclick = () => voteOnPlan(planData.id || Date.now());
-
-    container.appendChild(saveBtn);
-    container.appendChild(voteBtn);
-    planCard.appendChild(container);
-}
 </script>
 </body>
 </html>

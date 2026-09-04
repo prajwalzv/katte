@@ -1,13 +1,20 @@
 {
-  "name": "katta",
+  "name": "katte",
   "version": "1.0.0",
-  "description": "Full Stack Hangout Planner for Bengaluru",
+  "description": "Hangout planner for Bengaluru. Budget, area and headcount in, three costed plans out.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test.js && node ui.js && node api.test.js"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5"
-  }
+    "cors": "^2.8.6",
+    "express": "^4.22.2"
+  },
+  "license": "MIT",
+  "private": true
 }
