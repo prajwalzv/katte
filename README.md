@@ -103,7 +103,6 @@ Prices for the built in places are our own estimates for 2025 and 2026, from pub
 | --- | --- |
 | Prajwal Vidyasagar | 1RX24CS172 |
 | Pratheeksha Reddy S M | 1RX24CS181 |
-| B Masoom | 1RN24CS043 |
 
 ## Licence
 
