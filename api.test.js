@@ -6,21 +6,13 @@ const ok=(n,c,x)=>{ if(c)pass++; else {fail++;console.log('FAIL:',n,x===undefine
 const get=(p)=>fetch(BASE+p).then(async r=>({s:r.status,b:await r.json().catch(()=>({}))}));
 const post=(p,body)=>fetch(BASE+p,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(async r=>({s:r.status,b:await r.json().catch(()=>({}))}));
 
-const srv = spawn('node',['server.js'],{env:{...process.env,PORT:String(PORT),GOOGLE_MAPS_API_KEY:''},cwd:__dirname,stdio:'ignore'});
+const srv = spawn('node',['server.js'],{env:{...process.env,PORT:String(PORT)},cwd:__dirname,stdio:'ignore'});
 setTimeout(main, 1200);
 
 async function main(){
  try{
   let r=await get('/api/health');
   ok('health ok', r.s===200 && r.b.ok===true, r.b);
-  ok('reports live search off without a key', r.b.liveSearch===false);
-
-  r=await get('/api/places/search?q=toit');
-  ok('search says no key, not a crash', r.s===503 && r.b.error==='no_key', r.b);
-  r=await get('/api/places/search?q=a');
-  ok('rejects one letter', r.s===400, r.b);
-  r=await get('/api/places/nearby?lat=abc&lng=1');
-  ok('rejects bad coords', r.s===400, r.b);
 
   r=await post('/api/plans',{people:5,budget:700,area:'Indiranagar',plans:[
     {title:'Toit then Corner House',perHead:640,stops:['Toit','Corner House']},

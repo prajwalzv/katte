@@ -273,16 +273,14 @@ textarea,input[type=text]{width:100%;padding:.55rem .7rem;border:2px solid var(-
 .row{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-top:.9rem}
 .mini{font-size:.9rem;color:var(--faded)}
 
-.saved-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:.8rem;margin-top:1rem}
-.saved-item{border:2px solid var(--ink);background:var(--cream);padding:.8rem .9rem;display:flex;flex-direction:column;gap:.35rem}
-.saved-item h4{font-size:1.15rem;line-height:1.15}
-.saved-item .st{font-size:.92rem;color:var(--ink-2)}
-.saved-item .pr{font-family:Khand,sans-serif;font-size:1.05rem;font-weight:700;color:var(--green)}
 
 
 /* live search results */
 .searchbox{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;margin-top:.55rem}
 .searchbox input{flex:1 1 210px;min-width:0;font-family:Mukta,sans-serif;font-size:1rem}
+.searchbox input:disabled{background:var(--cream-2);color:var(--faded);cursor:not-allowed}
+.act:disabled{opacity:.45;cursor:not-allowed}
+.act:disabled:hover{background:var(--paper)}
 .hits{list-style:none;margin:.6rem 0 0;padding:0;display:grid;gap:.35rem;max-height:19rem;overflow-y:auto}
 .hits li{display:flex;align-items:center;gap:.7rem;padding:.5rem .6rem;border:2px solid var(--ink);background:var(--cream)}
 .hits li:hover{background:var(--turmeric)}
@@ -360,8 +358,7 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
       </svg>
       <span class="lock"><span class="kn" aria-hidden="true">ಕಟ್ಟೆ</span><b>katte</b></span>
     </div>
-    <button class="top-btn" id="btnSaved" type="button">Saved <span class="cnt" id="savedCount">0</span></button>
-    <button class="top-btn" id="btnHow" type="button">How this works</button>
+      <button class="top-btn" id="btnHow" type="button">How this works</button>
   </div>
 </header>
 
@@ -387,10 +384,10 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
         </div>
 
         <div class="field">
-          <div class="lab"><label id="areaLab">Where</label><span class="hint">The usual spots</span></div>
+          <div class="lab"><label id="areaLab">Where</label><span class="hint">Tap one</span></div>
           <div class="chips" id="areas" role="group" aria-labelledby="areaLab"></div>
           <div class="searchbox">
-            <input type="text" id="q" placeholder="Somewhere else? Search any place in Bengaluru" aria-label="Search any place in Bengaluru" autocomplete="off">
+            <input type="text" id="q" placeholder="Or search anywhere in Bengaluru" aria-label="Search any place in Bengaluru" autocomplete="off">
             <button class="act" type="button" id="qgo">Search</button>
           </div>
           <div id="qstatus"></div>
@@ -422,7 +419,7 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
 
         <div class="roll-row">
           <button class="roll" type="submit" id="roll">Put three plans on the table</button>
-          <span class="roll-note" id="rollNote">Three, not thirty. You can reroll as many times as you like.</span>
+          <span class="roll-note" id="rollNote">Three, not thirty. Reroll as often as you like.</span>
         </div>
 
       </div>
@@ -455,15 +452,7 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
   </div>
 </section>
 
-<section class="section" id="savedSection">
-  <div class="wrap">
-    <div class="panel">
-      <h3>Kept for later</h3>
-      <p class="lead">Plans you saved. They stay on this device. Nothing leaves it.</p>
-      <div id="savedBody"></div>
-    </div>
-  </div>
-</section>
+
 
 </main>
 
@@ -482,19 +471,17 @@ footer .kn{font-family:"Baloo Tamma 2",sans-serif;font-size:1.15rem;font-weight:
   <div class="dlg">
     <h2>How this works</h2>
     <p>Every group has the same conversation. Somebody asks where to go, four people say "anywhere", and three days later nobody went anywhere.</p>
-    <p>Most arguments about where to go are really arguments about money that nobody wants to start out loud. So the budget goes first here. The rest gets easier after that.</p>
-    <p>You get three options. Not forty. Groups get slower as the list gets longer, so there is a reroll button instead of a scroll.</p>
-    <p>Every card carries the whole bill: tax, service charge, booking fees, shoe rental, the arcade card you will definitely end up buying. The big number is what actually leaves your account.</p>
-    <p>Then you vote. Pass the phone round the table, or send one link. Nobody installs anything. Ties go to the cheaper plan.</p>
-    <p class="mini">Saved plans live in this browser and nowhere else. No account, no server, nothing to delete later.</p>
+    <p>Most arguments about where to go are really arguments about money that nobody wants to start. So the budget goes first here. Everything after that gets easier.</p>
+    <p>You get three plans. Not forty. Groups get slower the longer the list gets, so there is a reroll button instead of endless scrolling.</p>
+    <p>Every plan carries the whole bill. Tax, service charge, booking fees, parking, the arcade card you will definitely end up buying. The big number is what actually leaves your account, not the menu price.</p>
+    <p>Then you settle it. Pass the phone round the table, or send one link to the group. The plans travel inside the link itself, so there is nothing to install and nobody has to make an account. Everyone who votes gets a two character reply to send back, you paste the chat in, and it counts them. Ties go to the cheaper plan.</p>
     <div class="row"><button class="act primary" type="button" id="howClose">Got it</button></div>
   </div>
 </dialog>
 
-<!-- If you host the site on GitHub Pages and the server somewhere else,
-     uncomment this and put your server address in.
-<script>window.KATTE_API = "https://your-app.onrender.com";</script>
--->
+<!-- Hosting the site on GitHub Pages and the server somewhere else?
+     Add a script tag here setting window.KATTE_API to your server address,
+     for example https://katte.onrender.com  See DEPLOY.md. -->
 <script>
 (function(){
 "use strict";
@@ -556,7 +543,7 @@ var SPOTS = [
  short:"an hour lost in Blossom",why:"Free to browse three floors. Nobody has ever left with zero books.",note:"Second-hand section upstairs is roughly half the price of the ground floor."},
 {id:"koshys",n:"Koshy's",area:"central",slot:"meal",anchor:true,mode:"head",lo:350,hi:650,hrs:2,when:["day","evening","night"],min:2,max:8,veg:false,booze:true,indoor:true,gst:5,
  short:"a long sit at Koshy's",why:"Slow service is the format, not a bug. Order coffee and stay two hours.",note:"The old side and the air-conditioned side have different prices for the same food."},
-{id:"rangoli",n:"Rangoli Metro Art Centre",area:"central",slot:"activity",anchor:true,mode:"head",lo:40,hi:100,hrs:1,when:["day","evening"],min:2,max:12,veg:true,booze:false,indoor:true,
+{id:"rangoli",n:"Rangoli Metro Art Centre",area:"central",slot:"activity",anchor:true,mode:"head",lo:40,hi:100,hrs:1,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:true,
  short:"whatever is on at Rangoli",why:"Sits on top of MG Road metro, costs nothing, and the programme changes weekly.",note:"Check what is showing before you go. Some weeks it is an empty corridor."},
 {id:"palace",n:"Bangalore Palace",area:"central",slot:"activity",anchor:true,mode:"ticket",lo:260,hi:320,hrs:2,when:["day"],min:2,max:12,veg:true,booze:false,indoor:true,
  extras:[{label:"Camera / phone photography",amt:280,per:"group"}],
@@ -571,16 +558,16 @@ var SPOTS = [
  short:"a table at Toit",why:"The beer is fairly priced. It is the food and the fourth round that get you.",note:"No reservations. A Friday wait runs past an hour. Go at 6 or plan to stand."},
 {id:"mystery",n:"An Indiranagar escape room",area:"indiranagar",slot:"activity",anchor:true,mode:"head",lo:350,hi:700,hrs:1,when:["day","evening","night"],min:3,max:8,veg:true,booze:false,indoor:true,
  short:"an escape room",why:"Sixty minutes where nobody looks at their phone. Rare.",note:"Book the slot online, walk-ins rarely get a room, and rates drop per head once you are five or more."},
-{id:"cornerhouse",n:"Corner House",area:"indiranagar",slot:"sweet",anchor:false,mode:"head",lo:170,hi:330,hrs:1,when:["day","evening","night"],min:2,max:10,veg:true,booze:false,indoor:true,gst:5,
+{id:"cornerhouse",n:"Corner House",area:"indiranagar",slot:"sweet",anchor:false,mode:"head",lo:170,hi:330,hrs:1,when:["day","evening","night"],min:2,max:16,veg:true,booze:false,indoor:true,gst:5,
  short:"a Death by Chocolate",why:"One DBC between two people. This is not a suggestion.",note:"The queue after 8pm on a weekend is a full twenty minutes."},
 {id:"hundredft",n:"100 Feet Road stretch",area:"indiranagar",slot:"walk",anchor:false,mode:"head",lo:50,hi:120,hrs:1,when:["evening","night"],min:2,max:12,veg:true,booze:false,indoor:false,
  short:"the 100 Feet Road walk",why:"Window shopping you cannot afford, which is free.",note:""},
 
 // koramangala
-{id:"grid",n:"Bowling at The Grid",area:"koramangala",slot:"activity",anchor:true,mode:"head",lo:280,hi:600,hrs:2,when:["day","evening","night"],min:2,max:12,veg:true,booze:true,indoor:true,
+{id:"grid",n:"Bowling at The Grid",area:"koramangala",slot:"activity",anchor:true,mode:"head",lo:280,hi:600,hrs:2,when:["day","evening","night"],min:2,max:16,veg:true,booze:true,indoor:true,
  extras:[{label:"Arcade card (optional, always happens)",amt:150,per:"head"}],
  short:"bowling at The Grid",why:"Bowling is priced per game per person, so two games each is the honest count.",note:"The arcade card is a separate spend and it disappears faster than the bowling does."},
-{id:"social",n:"Koramangala Social",area:"koramangala",slot:"meal",anchor:true,mode:"head",lo:600,hi:1100,hrs:3,when:["evening","night"],min:2,max:12,veg:false,booze:true,indoor:true,gst:18,
+{id:"social",n:"Koramangala Social",area:"koramangala",slot:"meal",anchor:true,mode:"head",lo:600,hi:1100,hrs:3,when:["evening","night"],min:2,max:16,veg:false,booze:true,indoor:true,gst:18,
  short:"a night at Social",why:"Loud, cheap-ish, and you can sit for three hours without being moved on.",note:"Weekend covers after 8pm are a real thing at some outlets. Go early or go elsewhere."},
 {id:"truffles",n:"Truffles",area:"koramangala",slot:"meal",anchor:true,mode:"head",lo:350,hi:600,hrs:1,when:["day","evening","night"],min:2,max:8,veg:false,booze:false,indoor:true,gst:5,
  short:"burgers at Truffles",why:"Still the benchmark. Still a wait.",note:"Put your name down and walk the block. The list moves faster than it looks."},
@@ -596,7 +583,7 @@ var SPOTS = [
  short:"the Kammanahalli food stretch",why:"Rolls, kebabs and shawarma within one signal of each other.",note:"This is a late plan. Most of it peaks after 9pm."},
 
 // out east
-{id:"phoenix",n:"Phoenix Marketcity",area:"whitefield",slot:"activity",anchor:true,mode:"head",lo:90,hi:200,hrs:3,when:["day","evening","night"],min:2,max:12,veg:true,booze:true,indoor:true,
+{id:"phoenix",n:"Phoenix Marketcity",area:"whitefield",slot:"activity",anchor:true,mode:"head",lo:90,hi:200,hrs:3,when:["day","evening","night"],min:2,max:20,veg:true,booze:true,indoor:true,
  extras:[{label:"Parking",amt:80,per:"group"}],
  short:"a Phoenix afternoon",why:"Free to walk around, which lasts about forty minutes before the food court.",note:"Parking is charged by the hour and the weekend rate is higher."},
 
@@ -616,28 +603,28 @@ var SPOTS = [
  short:"the Ramanagara boulders",why:"An hour out, vultures overhead, and back by lunch.",note:"There is almost no shade and no reliable food. Carry water for twice as long as you think."},
 
 // these exist all over the city, so they have no area
-{id:"multiplex",n:"A multiplex screening",area:"*",slot:"activity",anchor:true,mode:"ticket",lo:220,hi:420,hrs:3,when:["day","evening","night"],min:2,max:12,veg:true,booze:false,indoor:true,
+{id:"multiplex",n:"A multiplex screening",area:"*",slot:"activity",anchor:true,mode:"ticket",lo:220,hi:420,hrs:3,when:["day","evening","night"],min:2,max:20,veg:true,booze:false,indoor:true,
  extras:[{label:"Booking convenience fee",amt:48,per:"head"}],
  short:"a multiplex show",why:"Tuesday is the cheapest day of the week by a distance.",note:"The convenience fee on app bookings is not optional and the popcorn costs more than the seat."},
-{id:"singlescreen",n:"A single-screen matinee",area:"*",slot:"activity",anchor:true,mode:"ticket",lo:120,hi:200,hrs:3,when:["day","evening"],min:2,max:12,veg:true,booze:false,indoor:true,
+{id:"singlescreen",n:"A single-screen matinee",area:"*",slot:"activity",anchor:true,mode:"ticket",lo:120,hi:200,hrs:3,when:["day","evening"],min:2,max:20,veg:true,booze:false,indoor:true,
  short:"a single-screen matinee",why:"Counter tickets, no booking fee, and the interval samosa is the point.",note:"Cash at the counter is quickest, and seats are first-come on the day."},
 {id:"turf",n:"A box cricket or football turf",area:"*",slot:"activity",anchor:true,mode:"group",lo:1100,hi:2600,hrs:1,when:["evening","night"],min:8,max:16,veg:true,booze:false,indoor:false,
  short:"an hour on the turf",why:"Booked by the hour for the whole lot, so more people makes it cheaper.",note:"Peak slots between 7 and 10pm cost more and go a week ahead. Split by who turns up, not who booked."},
 {id:"badminton",n:"A badminton court",area:"*",slot:"activity",anchor:true,mode:"group",lo:300,hi:700,hrs:1,when:["day","evening","night"],min:2,max:4,veg:true,booze:false,indoor:true,
  short:"an hour of badminton",why:"Priced per court per hour. Four of you is the sweet spot.",note:"Racquets and shuttles are usually extra or bring-your-own. Evening slots carry a surcharge."},
-{id:"arcade",n:"An arcade floor",area:"*",slot:"activity",anchor:true,mode:"head",lo:300,hi:650,hrs:2,when:["day","evening","night"],min:2,max:12,veg:true,booze:false,indoor:true,
+{id:"arcade",n:"An arcade floor",area:"*",slot:"activity",anchor:true,mode:"head",lo:300,hi:650,hrs:2,when:["day","evening","night"],min:2,max:20,veg:true,booze:false,indoor:true,
  short:"an arcade run",why:"Load one card, not one each. It lasts longer that way.",note:"Card credits do not refund and the machines are tuned to eat them."},
 {id:"gokart",n:"Go-karting",area:"*",slot:"activity",anchor:true,mode:"head",lo:320,hi:900,hrs:1,when:["day","evening","night"],min:2,max:10,veg:true,booze:false,indoor:false,
  short:"a set of karting laps",why:"Charged per set of laps, not per hour. Six laps goes quicker than it sounds.",note:"Closed shoes only, and they will turn you away in slippers."},
 {id:"pottery",n:"A pottery or paint studio",area:"*",slot:"activity",anchor:true,mode:"head",lo:700,hi:1500,hrs:2,when:["day","evening"],min:2,max:10,veg:true,booze:false,indoor:true,
  short:"a pottery session",why:"Two hours, one thing to take home, zero phones.",note:"Book a day ahead. Firing and glazing your piece is usually charged separately."},
-{id:"darshini",n:"A darshini filter coffee",area:"*",slot:"coffee",anchor:true,mode:"head",lo:25,hi:70,hrs:1,when:["day","evening","night"],min:2,max:12,veg:true,booze:false,indoor:true,
+{id:"darshini",n:"A darshini filter coffee",area:"*",slot:"coffee",anchor:true,mode:"head",lo:25,hi:70,hrs:1,when:["day","evening","night"],min:2,max:20,veg:true,booze:false,indoor:true,
  short:"filter coffee standing up",why:"Twenty rupees, ninety seconds, and better than the ₹300 version.",note:""},
 {id:"chaat",n:"A chaat counter",area:"*",slot:"snack",anchor:true,mode:"head",lo:70,hi:160,hrs:1,when:["evening","night"],min:2,max:12,veg:true,booze:false,indoor:false,
  short:"a chaat stop",why:"One pani puri round, one masala puri, argue about the rest.",note:""},
 {id:"chai",n:"A cutting chai stall",area:"*",slot:"snack",anchor:true,mode:"head",lo:20,hi:60,hrs:1,when:["day","evening","night"],min:2,max:20,veg:true,booze:false,indoor:false,
  short:"chai and a bun",why:"The cheapest thirty minutes in the city, and usually the best ones.",note:""},
-{id:"icecream",n:"An ice cream counter",area:"*",slot:"sweet",anchor:false,mode:"head",lo:90,hi:220,hrs:1,when:["day","evening","night"],min:2,max:12,veg:true,booze:false,indoor:true,
+{id:"icecream",n:"An ice cream counter",area:"*",slot:"sweet",anchor:false,mode:"head",lo:90,hi:220,hrs:1,when:["day","evening","night"],min:2,max:20,veg:true,booze:false,indoor:true,
  short:"ice cream after",why:"The correct end to almost every plan on this list.",note:""},
 {id:"chainkaapi",n:"A coffee chain sit-down",area:"*",slot:"coffee",anchor:false,mode:"head",lo:240,hi:430,hrs:1,when:["day","evening","night"],min:2,max:8,veg:true,booze:false,indoor:true,gst:5,
  short:"a proper coffee",why:"You are renting a table. That is fine, just know that is what it is.",note:""},
@@ -994,31 +981,162 @@ var store = {
 
 /* Point this at your deployed server if the page is on GitHub Pages.
    Left empty it talks to whatever origin served the page. */
-var API = (window.KATTE_API || "").replace(/\/$/, "");
-var liveOn = false;
+/* ------------------------------------------------------------------
+   To switch on city wide search, paste a Google Maps key between the
+   quotes below, then restrict that key to your own site in the Google
+   Cloud console. Leave it empty and the search box simply does not
+   appear, everything else works as normal. Full steps in DEPLOY.md.
+   ------------------------------------------------------------------ */
+var MAPS_KEY = "";
+
+var CITY = {lat: 12.9716, lng: 77.5946, radius: 30000};
+var liveOn = null;
+
+/* Google refuses browser calls to its plain web service, so the only way
+   to search from a page like this is their JavaScript library. */
+var serverOn = null;
 
 function api(path, options){
-  return fetch(API + path, options).then(function(r){
-    return r.json().then(function(body){
-      if(!r.ok) throw new Error(body.message || body.error || ("Server said " + r.status));
+  if(typeof fetch !== "function") return Promise.reject(new Error("no_server"));
+  return fetch(path, options).then(function(r){
+    return r.text().then(function(txt){
+      var body;
+      try { body = JSON.parse(txt); }
+      catch(e){ throw new Error("no_server"); }
+      if(!r.ok) throw new Error(body.error || ("Server said " + r.status));
       return body;
     });
+  }, function(){ throw new Error("no_server"); });
+}
+
+var mapsLoading = null;
+function loadMaps(){
+  if(!MAPS_KEY) return Promise.reject(new Error("no_key"));
+  if(mapsLoading) return mapsLoading;
+  mapsLoading = new Promise(function(resolve, reject){
+    var done = false;
+    var timer = setTimeout(function(){
+      if(!done){ done = true; reject(new Error("maps_slow")); }
+    }, 12000);
+    window.__katteMapsReady = function(){
+      if(done) return;
+      done = true; clearTimeout(timer); resolve(window.google);
+    };
+    var tag = document.createElement("script");
+    tag.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(MAPS_KEY) +
+              "&libraries=places&v=weekly&loading=async&callback=__katteMapsReady";
+    tag.async = true;
+    tag.onerror = function(){
+      if(done) return;
+      done = true; clearTimeout(timer); reject(new Error("maps_failed"));
+    };
+    document.head.appendChild(tag);
   });
+  return mapsLoading;
+}
+
+/* Google's price bands, turned into what one person actually spends here.
+   Nothing is ever zero, because even a free park costs you a chai. */
+var BY_LEVEL = {FREE:60, INEXPENSIVE:170, MODERATE:430, EXPENSIVE:900, VERY_EXPENSIVE:1600};
+var BY_TYPE = [["bar",850],["night_club",950],["restaurant",430],["movie_theater",320],
+  ["amusement_park",500],["bowling_alley",400],["cafe",260],["coffee_shop",240],
+  ["bakery",170],["ice_cream_shop",150],["dessert_shop",180],["food_court",250],
+  ["meal_takeaway",180],["tourist_attraction",220],["museum",150],["art_gallery",120],
+  ["park",70],["garden",70],["hiking_area",150],["shopping_mall",300],
+  ["book_store",200],["place_of_worship",60]];
+var BY_SLOT = [["bar","meal"],["night_club","meal"],["restaurant","meal"],["food_court","meal"],
+  ["meal_takeaway","snack"],["cafe","coffee"],["coffee_shop","coffee"],["bakery","sweet"],
+  ["ice_cream_shop","sweet"],["dessert_shop","sweet"],["park","walk"],["garden","walk"],
+  ["hiking_area","walk"],["place_of_worship","walk"],["tourist_attraction","activity"],
+  ["museum","activity"],["art_gallery","activity"],["movie_theater","activity"],
+  ["bowling_alley","activity"],["amusement_park","activity"],["shopping_mall","activity"]];
+
+function fromTable(types, table, fallback){
+  var list = types || [];
+  for(var i=0;i<table.length;i++){
+    if(list.indexOf(table[i][0]) !== -1) return table[i][1];
+  }
+  return fallback;
+}
+
+function priceOf(place){
+  var lvl = place.priceLevel ? String(place.priceLevel).toUpperCase().replace("PRICE_LEVEL_","") : "";
+  if(BY_LEVEL[lvl]) return BY_LEVEL[lvl];
+  return fromTable(place.types, BY_TYPE, 250);
+}
+
+function tidyPlace(place, openNow){
+  var loc = place.location;
+  var lat = loc ? (typeof loc.lat === "function" ? loc.lat() : loc.lat) : null;
+  var lng = loc ? (typeof loc.lng === "function" ? loc.lng() : loc.lng) : null;
+  return {
+    id: place.id,
+    name: (place.displayName && place.displayName.text) || place.displayName || "Unnamed place",
+    address: place.formattedAddress || "",
+    lat: lat, lng: lng,
+    types: place.types || [],
+    slot: fromTable(place.types, BY_SLOT, "activity"),
+    rating: typeof place.rating === "number" ? place.rating : null,
+    reviews: typeof place.userRatingCount === "number" ? place.userRatingCount : null,
+    perHead: Math.max(60, priceOf(place)),
+    openNow: typeof openNow === "boolean" ? openNow : null,
+    live: true
+  };
+}
+
+var searchCache = {};
+
+function searchPlaces(q){
+  var key = q.toLowerCase();
+  if(searchCache[key]) return Promise.resolve(searchCache[key]);
+
+  return loadMaps().then(function(g){
+    return g.maps.importLibrary("places");
+  }).then(function(places){
+    return places.Place.searchByText({
+      textQuery: q + " Bengaluru",
+      fields: ["id","displayName","formattedAddress","location","types",
+               "rating","userRatingCount","priceLevel","businessStatus","regularOpeningHours"],
+      locationBias: {center: {lat: CITY.lat, lng: CITY.lng}, radius: CITY.radius},
+      language: "en", region: "in", maxResultCount: 12
+    });
+  }).then(function(res){
+    var list = (res && res.places) || [];
+    list = list.filter(function(p){ return p.businessStatus !== "CLOSED_PERMANENTLY"; });
+    return Promise.all(list.map(function(p){
+      var open = null;
+      try {
+        var r = p.isOpen ? p.isOpen() : null;
+        if(r && typeof r.then === "function"){
+          return r.then(function(v){ return tidyPlace(p, v); },
+                        function(){ return tidyPlace(p, null); });
+        }
+        open = r;
+      } catch(e){ open = null; }
+      return tidyPlace(p, open);
+    }));
+  }).then(function(out){
+    out = out.filter(function(p){ return p.lat !== null; });
+    searchCache[key] = out;
+    return out;
+  });
+}
+
+
+function offlineNote(){
+  return "City wide search is switched off. Pick one of the areas above, they all work.";
 }
 
 var opts = {place: null, budget: 500, area: "any", n: 4, when: "evening", veg: false, sober: false, indoor: false, single: false, travel: false};
 var seed = Math.floor(Math.random() * 100000);
 var current = [];
 var shortlist = [];
-var saved = [];
 var voteMode = "phone";
 var ballotId = null;
 var voters = [];
 var passIndex = 0;
 var passMarks = [];
 
-try{ saved = JSON.parse(store.get("katte.saved") || "[]"); }catch(e){ saved = []; }
-if(!Array.isArray(saved)) saved = [];
 
 function $(id){ return document.getElementById(id); }
 function el(tag, cls, txt){
@@ -1156,18 +1274,21 @@ function renderHits(places, q){
 
 function doSearch(){
   var q = $("q").value.trim();
-  if(q.length < 2){ toast("Type at least two letters"); return; }
+  if(q.length < 2){ toast("Type a bit more"); return; }
   $("hits").hidden = true;
-  $("qstatus").innerHTML = "";
-  $("qstatus").appendChild(el("p","searching","Asking Google about " + q + "\u2026"));
+  clear($("qstatus"));
+  $("qstatus").appendChild(el("p","searching","Looking up " + q + "\u2026"));
+  $("qgo").disabled = true;
 
-  api("/api/places/search?q=" + encodeURIComponent(q)).then(function(res){
-    renderHits(res.places || [], q);
+  searchPlaces(q).then(function(places){
+    $("qgo").disabled = false;
+    renderHits(places, q);
   }).catch(function(e){
-    $("qstatus").innerHTML = "";
-    var msg = /no_key|Failed to fetch|NetworkError/i.test(e.message)
-      ? "Live search needs the server running. Start it with npm start, or use the areas above."
-      : e.message;
+    $("qgo").disabled = false;
+    clear($("qstatus"));
+    var msg = e.message === "no_key" ? offlineNote()
+            : e.message === "maps_slow" ? "Google is taking too long to answer. Try once more, or pick an area above."
+            : "Could not reach Google just now. Pick an area above and it all still works.";
     $("qstatus").appendChild(el("p","searching", msg));
   });
 }
@@ -1235,6 +1356,26 @@ function livePlan(anchor, extra, n){
   };
 }
 
+function nearbyPlaces(p, kind){
+  return loadMaps().then(function(g){
+    return g.maps.importLibrary("places");
+  }).then(function(places){
+    return places.Place.searchNearby({
+      fields: ["id","displayName","formattedAddress","location","types",
+               "rating","userRatingCount","priceLevel","businessStatus"],
+      locationRestriction: {center: {lat: p.lat, lng: p.lng}, radius: 1800},
+      includedPrimaryTypes: [kind],
+      maxResultCount: 10,
+      language: "en", region: "in"
+    });
+  }).then(function(res){
+    return ((res && res.places) || [])
+      .filter(function(x){ return x.businessStatus !== "CLOSED_PERMANENTLY"; })
+      .map(function(x){ return tidyPlace(x, null); })
+      .filter(function(x){ return x.lat !== null; });
+  }).catch(function(){ return []; });
+}
+
 function runLive(){
   var p = opts.place, n = opts.n;
   var res = $("results");
@@ -1248,11 +1389,7 @@ function runLive(){
             : p.slot === "walk" ? ["cafe","restaurant","ice_cream_shop"]
             : ["cafe","restaurant","park"];
 
-  Promise.all(kinds.map(function(k){
-    return api("/api/places/nearby?lat=" + p.lat + "&lng=" + p.lng + "&kind=" + k)
-      .then(function(r){ return r.places || []; })
-      .catch(function(){ return []; });
-  })).then(function(sets){
+  Promise.all(kinds.map(function(k){ return nearbyPlaces(p, k); })).then(function(sets){
     /* pool every nearby place, drop repeats, then pair the cheapest ones
        with the anchor until there are three plans or we run out */
     var pool = [], seen = {};
@@ -1289,7 +1426,7 @@ function runLive(){
     renderCards();
   }).catch(function(){
     clear($("cards"));
-    $("cards").appendChild(el("div","empty","Could not reach the server for nearby places. Pick an area above instead."));
+    $("cards").appendChild(el("div","empty","Could not reach Google for places nearby. Pick an area above instead."));
   });
 }
 
@@ -1315,9 +1452,6 @@ function bindControls(){
   });
   $("btnHow").addEventListener("click", function(){ $("howDlg").showModal(); });
   $("howClose").addEventListener("click", function(){ $("howDlg").close(); });
-  $("btnSaved").addEventListener("click", function(){
-    $("savedSection").scrollIntoView({behavior:"smooth", block:"start"});
-  });
 }
 
 function setPeople(v){
@@ -1407,9 +1541,6 @@ function renderReceipt(plan){
 function isShortlisted(plan){
   return shortlist.some(function(p){ return p.ids.join(",") === plan.ids.join(","); });
 }
-function isSaved(plan){
-  return saved.some(function(p){ return p.ids.join(",") === plan.ids.join(","); });
-}
 
 function renderCard(plan, idx){
   var card = el("article","card");
@@ -1452,19 +1583,6 @@ function renderCard(plan, idx){
   });
   acts.appendChild(vote);
 
-  var save = el("button","act" + (isSaved(plan) ? " on" : ""), isSaved(plan) ? "Kept" : "Keep");
-  save.type = "button";
-  save.addEventListener("click", function(){
-    var key = plan.ids.join(",");
-    var at = -1;
-    saved.forEach(function(p,i){ if(p.ids.join(",") === key) at = i; });
-    if(at >= 0) saved.splice(at,1);
-    else saved.push({ids: plan.ids, n: opts.n, title: plan.title, perHead: plan.bill.perHead});
-    store.set("katte.saved", JSON.stringify(saved));
-    renderSaved();
-    renderCards();
-  });
-  acts.appendChild(save);
 
   var swap = el("button","act", plan.stops.length > 1 ? "Swap the second stop" : "Add another stop");
   swap.type = "button";
@@ -1508,8 +1626,10 @@ function run(quiet){
     } else if(opts.area !== "any"){
       why = "Nothing in " + AREAS[opts.area].n + " fits " + money(opts.budget) + " a head for " + opts.n +
             " of you. Switch the area to anywhere and the city-wide options come back in.";
+    } else if(opts.travel && opts.budget < 400){
+      why = "At " + money(opts.budget) + " a head the journey there and back eats most of the budget. Untick count the travel, or push the cap up a bit.";
     } else if(opts.veg || opts.sober || opts.indoor){
-      why = "The filters have cut it down to nothing at " + money(opts.budget) + " a head. Drop one of them, or raise the cap.";
+      why = "Those filters together leave nothing at " + money(opts.budget) + " a head. Drop one of them, or raise the cap.";
     } else {
       why = "Nothing fits " + money(opts.budget) + " a head for " + opts.n + " of you at that time. Raise the cap by a couple of hundred and it opens up.";
     }
@@ -1529,55 +1649,8 @@ function run(quiet){
   if(!quiet) res.scrollIntoView({behavior:"smooth", block:"start"});
 }
 
-function renderSaved(){
-  var body = $("savedBody");
-  clear(body);
-  $("savedCount").textContent = saved.length;
-  if(!saved.length){
-    body.appendChild(el("div","empty","Nothing kept yet. Hit Keep on a plan and it waits here for the next time somebody asks what to do."));
-    return;
-  }
-  var list = el("div","saved-list");
-  saved.slice().reverse().forEach(function(p){
-    var item = el("div","saved-item");
-    item.appendChild(el("h4", null, p.title));
-    var names = p.ids.map(function(id){ return SPOT_BY_ID[id] ? SPOT_BY_ID[id].n : id; }).join(" → ");
-    item.appendChild(el("div","st", names));
-    item.appendChild(el("div","pr", money(p.perHead) + " a head, for " + p.n));
-    var row = el("div","row");
-    var use = el("button","act","Put to vote");
-    use.type = "button";
-    use.addEventListener("click", function(){
-      var stops = p.ids.map(function(id){ return SPOT_BY_ID[id]; }).filter(Boolean);
-      if(!stops.length) return;
-      var bill = planBill(stops, opts.n, opts);
-      var hrs = 0; stops.forEach(function(s){ hrs += (s.hrs||1); });
-      var plan = {ids: p.ids, stops: stops, title: p.title, hours: hrs, bill: bill,
-                  fit: "", heads: headsUp(stops), over: false,
-                  area: stops[0].area === "*" ? null : stops[0].area};
-      if(shortlist.length >= 5){ toast("Five is the most a group will actually vote on"); return; }
-      if(isShortlisted(plan)){ toast("Already on the ballot"); return; }
-      shortlist.push(plan);
-      renderVote();
-      renderCards();
-      $("voteSection").scrollIntoView({behavior:"smooth", block:"start"});
-    });
-    row.appendChild(use);
-    var del = el("button","act","Forget it");
-    del.type = "button";
-    del.addEventListener("click", function(){
-      saved = saved.filter(function(x){ return x.ids.join(",") !== p.ids.join(","); });
-      store.set("katte.saved", JSON.stringify(saved));
-      renderSaved(); renderCards();
-    });
-    row.appendChild(del);
-    item.appendChild(row);
-    list.appendChild(item);
-  });
-  body.appendChild(list);
-}
 
-var VOTE_MODES = [{k:"phone",l:"Pass the phone around"},{k:"link",l:"Send one link"},{k:"count",l:"Count the codes"}];
+var VOTE_MODES = [{k:"phone",l:"Pass the phone around"},{k:"link",l:"Send a link"}];
 
 function renderVote(){
   var sec = $("voteSection");
@@ -1602,8 +1675,7 @@ function renderVote(){
   var body = $("voteBody");
   clear(body);
   if(voteMode === "phone") renderPhoneVote(body);
-  else if(voteMode === "link") renderLinkVote(body);
-  else renderCountVote(body);
+  else renderLinkVote(body);
 }
 
 function ballotList(marks, onToggle){
@@ -1631,7 +1703,7 @@ function ballotList(marks, onToggle){
 }
 
 function renderPhoneVote(body){
-  body.appendChild(el("p","lead","Mark every plan you would be fine with, not only your favourite. Then hand the phone on."));
+  body.appendChild(el("p","lead","Tick every plan you would be happy with, then hand the phone on. Being generous here is what makes it work."));
 
   if(passIndex >= voters.length + 1 && voters.length){
     renderResult(body, voters.map(function(v){ return {who: v.name, mask: v.mask}; }));
@@ -1700,81 +1772,108 @@ function shareUrl(){
 }
 
 function renderLinkVote(body){
-  body.appendChild(el("p","lead","This saves the shortlist on the server and gives you one link. Everyone opens it, ticks what they are fine with, and the votes come straight back here. Nobody signs up for anything."));
+  body.appendChild(el("p","lead","One link, sent once. Everyone opens it, ticks what they are happy with, and taps send. Their replies come back to you here. No app, no login, nothing to install."));
 
-  var out = el("div");
-  var row = el("div","row");
-  var go = el("button","act primary","Make the voting link");
-  go.type = "button";
-  go.addEventListener("click", function(){
-    go.disabled = true;
-    go.textContent = "Saving\u2026";
-    api("/api/plans", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({
-        people: opts.n, budget: opts.budget,
-        area: opts.place ? opts.place.name : (opts.area === "any" ? "Anywhere" : AREAS[opts.area].n),
-        plans: shortlist.map(function(pl){
-          return {title: pl.title, perHead: pl.bill.perHead, stops: pl.stops.map(function(x){ return x.n; })};
-        })
-      })
-    }).then(function(res){
-      ballotId = res.id;
-      go.remove();
-      renderShareBox(out, res.id);
-    }).catch(function(e){
-      go.disabled = false;
-      go.textContent = "Make the voting link";
-      clear(out);
-      var why = /Failed to fetch|NetworkError/i.test(e.message)
-        ? "The server is not running, so the ballot cannot be saved. Start it with npm start, or use pass the phone instead."
-        : e.message;
-      out.appendChild(el("p","mini", why));
-    });
-  });
-  row.appendChild(go);
-  body.appendChild(row);
-  body.appendChild(out);
-}
-
-function renderShareBox(out, id){
-  clear(out);
-  var url = location.href.split("#")[0] + "#v=" + id;
+  var url = shareUrl();
   var box = el("textarea");
   box.rows = 2; box.readOnly = true; box.value = url;
-  out.appendChild(box);
+  box.style.marginTop = ".8rem";
+  body.appendChild(box);
 
-  var msg = "Vote on this:\n" + shortlist.map(function(p,i){
-    return (i+1) + ". " + p.title + ", " + money(p.bill.perHead) + " a head";
-  }).join("\n") + "\n\n" + url;
+  var msg = "Where are we going? Tick what you are fine with:\n\n" +
+    shortlist.map(function(p,i){ return (i+1) + ". " + p.title + ", " + money(p.bill.perHead) + " a head"; }).join("\n") +
+    "\n\n" + url;
 
   var r = el("div","row");
   var c = el("button","act primary","Copy the link");
   c.type = "button";
   c.addEventListener("click", function(){ copyText(url, "Link copied. Paste it in the group."); });
   r.appendChild(c);
+
   var wa = el("a","act","Send on WhatsApp");
   wa.href = "https://wa.me/?text=" + encodeURIComponent(msg);
   wa.target = "_blank"; wa.rel = "noopener";
   r.appendChild(wa);
-  var refresh = el("button","act","Check the votes");
-  refresh.type = "button";
-  refresh.addEventListener("click", function(){ showServerTally(out, id); });
-  r.appendChild(refresh);
-  out.appendChild(r);
-  out.appendChild(el("p","mini","Ballot code " + id + ". Hit check the votes whenever you want the running count."));
+  body.appendChild(r);
+
+  var auto = el("div");
+  body.appendChild(auto);
+  if(serverOn){
+    var upg = el("div","row");
+    var save = el("button","act","Collect the votes for me");
+    save.type = "button";
+    save.addEventListener("click", function(){
+      save.disabled = true; save.textContent = "Saving\u2026";
+      api("/api/plans", {
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          people: opts.n, budget: opts.budget,
+          area: opts.place ? opts.place.name : (opts.area === "any" ? "Anywhere" : AREAS[opts.area].n),
+          plans: shortlist.map(function(pl){
+            return {title: pl.title, perHead: pl.bill.perHead, stops: pl.stops.map(function(x){ return x.n; })};
+          })
+        })
+      }).then(function(res){
+        box.value = location.href.split("#")[0] + "#v=" + res.id;
+        clear(auto);
+        auto.appendChild(el("p","mini","Saved as ballot " + res.id + ". The link above now collects votes on its own, no replies to paste."));
+        var chk = el("button","act primary","Check the votes");
+        chk.type = "button";
+        chk.addEventListener("click", function(){ serverTally(auto, res.id); });
+        var rw = el("div","row"); rw.appendChild(chk); auto.appendChild(rw);
+      }).catch(function(){
+        save.disabled = false; save.textContent = "Collect the votes for me";
+        toast("Could not reach the server, use the replies box below.");
+      });
+    });
+    upg.appendChild(save);
+    upg.appendChild(el("span","mini","Optional. Needs the server running."));
+    auto.appendChild(upg);
+  }
+
+  /* replies land back here, in the same screen, so there is nothing else to find */
+  body.appendChild(el("h3", null, "Their replies"));
+  body.appendChild(el("p","mini","Everyone who votes gets a short reply to send back. Paste the chat in and it counts them for you."));
+
+  var ta = el("textarea");
+  ta.rows = 4;
+  ta.placeholder = "Paste the group chat here";
+  body.appendChild(ta);
+
+  var out = el("div");
+  var r2 = el("div","row");
+  var count = el("button","act primary","Count the replies");
+  count.type = "button";
+  count.addEventListener("click", function(){
+    var ballots = parseCodes(ta.value);
+    clear(out);
+    if(!ballots.length){
+      out.appendChild(el("p","mini","No replies spotted in that yet. Each one looks like RK-3, two letters then a dash."));
+      return;
+    }
+    renderResult(out, ballots);
+  });
+  r2.appendChild(count);
+  body.appendChild(r2);
+  body.appendChild(out);
+
+  /* live counting as replies are pasted in */
+  ta.addEventListener("input", function(){
+    var ballots = parseCodes(ta.value);
+    if(ballots.length){ clear(out); renderResult(out, ballots); }
+  });
 }
 
-function showServerTally(out, id){
+
+
+function serverTally(out, id){
   api("/api/plans/" + id + "/votes").then(function(t){
     var old = out.querySelector(".server-tally");
     if(old) old.remove();
     var wrap = el("div","server-tally");
     if(!t.voters.length){
       wrap.appendChild(el("p","mini","Nobody has voted yet."));
-      out.appendChild(wrap);
-      return;
+      out.appendChild(wrap); return;
     }
     wrap.appendChild(el("h3", null, t.top === 0 ? "Nobody wanted any of them" : "Result"));
     var ul = el("ul","tally");
@@ -1792,34 +1891,59 @@ function showServerTally(out, id){
     wrap.appendChild(el("p","mini","Voted so far: " + t.voters.join(", ")));
     if(t.brokeTie) wrap.appendChild(el("p","mini","It tied, so the cheaper plan took it."));
     out.appendChild(wrap);
-  }).catch(function(e){ toast(e.message); });
+  }).catch(function(){ toast("Could not reach the server."); });
 }
 
-function renderCountVote(body){
-  body.appendChild(el("p","lead","Paste the replies straight from the group chat. It picks out the codes and ignores everything else people typed around them."));
+function serverVoter(row){
+  document.querySelector(".hero").hidden = true;
+  $("voteSection").hidden = false;
+  var panel = $("votePanel");
+  clear(panel);
+  panel.appendChild(el("h3", null, "Somebody wants your vote"));
+  panel.appendChild(el("p","lead", row.plans.length + " plans, for " + row.people + " people" + (row.area ? " around " + row.area : "") + ". Tick anything you would be happy with."));
+  var nr = el("div","row"), input = el("input");
+  input.type = "text"; input.placeholder = "Your name"; input.style.maxWidth = "220px";
+  nr.appendChild(input); panel.appendChild(nr);
 
-  var ta = el("textarea");
-  ta.rows = 5;
-  ta.placeholder = "Paste the chat here. Codes look like RA-3 or SN-C.";
-  ta.style.marginTop = ".9rem";
-  body.appendChild(ta);
-
-  var out = el("div");
-  var row = el("div","row");
-  var go = el("button","act primary","Count them");
-  go.type = "button";
-  go.addEventListener("click", function(){
-    var ballots = parseCodes(ta.value);
-    clear(out);
-    if(!ballots.length){
-      out.appendChild(el("p","mini","No codes in that. A code is two letters, a dash, then one character. RA-3, for instance."));
-      return;
-    }
-    renderResult(out, ballots);
+  var marks = [], ul = el("ul","ballot");
+  row.plans.forEach(function(pl, i){
+    var li = el("li"), nm = el("div","bname");
+    nm.appendChild(el("b", null, pl.title));
+    nm.appendChild(el("span", null, money(pl.perHead) + " a head"));
+    li.appendChild(nm);
+    var yn = el("div","yn"), yes = el("button",null,"In"), no = el("button","no","Out");
+    yes.type = "button"; no.type = "button";
+    yes.addEventListener("click", function(){ marks[i]=true; yes.setAttribute("aria-pressed","true"); no.setAttribute("aria-pressed","false"); });
+    no.addEventListener("click", function(){ marks[i]=false; no.setAttribute("aria-pressed","true"); yes.setAttribute("aria-pressed","false"); });
+    yn.appendChild(yes); yn.appendChild(no); li.appendChild(yn); ul.appendChild(li);
   });
-  row.appendChild(go);
-  body.appendChild(row);
-  body.appendChild(out);
+  panel.appendChild(ul);
+
+  var out = el("div"), rw = el("div","row");
+  var send = el("button","act primary","Send my vote");
+  send.type = "button";
+  send.addEventListener("click", function(){
+    if(!input.value.trim()){ toast("Put your name in first"); input.focus(); return; }
+    var picks = [];
+    for(var i=0;i<row.plans.length;i++) if(marks[i] === true) picks.push(i);
+    send.disabled = true; send.textContent = "Sending\u2026";
+    api("/api/plans/" + row.id + "/votes", {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({name: input.value.trim(), picks: picks})
+    }).then(function(){
+      clear(out);
+      var okb = el("div","code-out");
+      okb.appendChild(el("p","mini","Vote recorded. You can close this."));
+      okb.appendChild(el("div","big","Thanks"));
+      out.appendChild(okb);
+      serverTally(out, row.id);
+    }).catch(function(){
+      send.disabled = false; send.textContent = "Send my vote";
+      toast("Could not send that. Try again.");
+    });
+  });
+  rw.appendChild(send);
+  panel.appendChild(rw); panel.appendChild(out);
 }
 
 function renderResult(container, ballots){
@@ -1875,7 +1999,6 @@ function renderResult(container, ballots){
 
 function renderVoterView(data){
   document.querySelector(".hero").hidden = true;
-  $("savedSection").hidden = true;
   var sec = $("voteSection");
   sec.hidden = false;
   shortlist = data.plans;
@@ -1942,100 +2065,28 @@ function renderVoterView(data){
   panel.appendChild(out);
 }
 
-function renderServerVoter(row){
-  document.querySelector(".hero").hidden = true;
-  $("savedSection").hidden = true;
-  $("voteSection").hidden = false;
-  var panel = $("votePanel");
-  clear(panel);
-
-  panel.appendChild(el("h3", null, "Somebody wants your vote"));
-  panel.appendChild(el("p","lead", row.plans.length + " plans, for " + row.people + " people" + (row.area ? " around " + row.area : "") + ". Tick anything you would be happy with, not only your favourite."));
-
-  var nameRow = el("div","row");
-  var input = el("input");
-  input.type = "text"; input.placeholder = "Your name"; input.style.maxWidth = "220px";
-  nameRow.appendChild(input);
-  panel.appendChild(nameRow);
-
-  var marks = [];
-  var ul = el("ul","ballot");
-  row.plans.forEach(function(pl, i){
-    var li = el("li");
-    var nm = el("div","bname");
-    nm.appendChild(el("b", null, pl.title));
-    nm.appendChild(el("span", null, money(pl.perHead) + " a head" + (pl.stops && pl.stops.length ? "  \u00b7  " + pl.stops.join(", ") : "")));
-    li.appendChild(nm);
-    var yn = el("div","yn");
-    var yes = el("button", null, "In"), no = el("button","no","Out");
-    yes.type = "button"; no.type = "button";
-    yes.addEventListener("click", function(){
-      marks[i] = true; yes.setAttribute("aria-pressed","true"); no.setAttribute("aria-pressed","false");
-    });
-    no.addEventListener("click", function(){
-      marks[i] = false; no.setAttribute("aria-pressed","true"); yes.setAttribute("aria-pressed","false");
-    });
-    yn.appendChild(yes); yn.appendChild(no);
-    li.appendChild(yn);
-    ul.appendChild(li);
-  });
-  panel.appendChild(ul);
-
-  var out = el("div");
-  var row2 = el("div","row");
-  var send = el("button","act primary","Send my vote");
-  send.type = "button";
-  send.addEventListener("click", function(){
-    if(!input.value.trim()){ toast("Put your name in first"); input.focus(); return; }
-    var picks = [];
-    for(var i=0;i<row.plans.length;i++) if(marks[i] === true) picks.push(i);
-    send.disabled = true; send.textContent = "Sending\u2026";
-    api("/api/plans/" + row.id + "/votes", {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({name: input.value.trim(), picks: picks})
-    }).then(function(){
-      clear(out);
-      var okBox = el("div","code-out");
-      okBox.appendChild(el("p","mini","Vote recorded. You can close this now."));
-      okBox.appendChild(el("div","big","Thanks"));
-      out.appendChild(okBox);
-      shortlist = row.plans.map(function(pl){ return {title: pl.title, bill:{perHead: pl.perHead}}; });
-      showServerTally(out, row.id);
-    }).catch(function(e){
-      send.disabled = false; send.textContent = "Send my vote";
-      toast(e.message);
-    });
-  });
-  row2.appendChild(send);
-  var mine = el("button","act","I want my own plans");
-  mine.type = "button";
-  mine.addEventListener("click", function(){ location.hash = ""; location.reload(); });
-  row2.appendChild(mine);
-  panel.appendChild(row2);
-  panel.appendChild(out);
-}
-
 function boot(){
   buildControls();
   bindControls();
   setPeople(opts.n);
   $("budgetVal").textContent = budgetLabel(opts.budget);
-  renderSaved();
 
-  api("/api/health").then(function(h2){
-    liveOn = Boolean(h2.liveSearch);
-    if(!liveOn) $("q").placeholder = "Live search needs an API key set on the server";
-  }).catch(function(){
-    liveOn = false;
-    $("q").placeholder = "Search needs the server running. Try npm start.";
-  });
+  api("/api/health").then(function(){ serverOn = true; }, function(){ serverOn = false; });
+
+  /* no key means no search box at all, rather than one that cannot work */
+  liveOn = Boolean(MAPS_KEY);
+  if(!liveOn){
+    var sb = document.querySelector(".searchbox");
+    if(sb) sb.hidden = true;
+    var lab = document.querySelector('[for="areaLab"], #areaLab');
+    clear($("qstatus"));
+  }
 
   var h = location.hash || "";
   if(h.indexOf("#v=") === 0){
     var vid = h.slice(3).toUpperCase().replace(/[^A-Z0-9]/g,"");
-    api("/api/plans/" + vid).then(function(row){ renderServerVoter(row); })
-      .catch(function(){ toast("That ballot could not be loaded, so here is a fresh start."); });
+    api("/api/plans/" + vid).then(function(row){ serverVoter(row); })
+      .catch(function(){ toast("That ballot needs the server running."); });
     return;
   }
   if(h.indexOf("#s=") === 0){

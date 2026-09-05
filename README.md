@@ -26,19 +26,19 @@ Voting works from one link. The shortlist gets saved to the server, everyone ope
 
 ## Tech stack
 
-Frontend is plain HTML, CSS and JavaScript in one file. No framework and no build step.
+Frontend is plain HTML, CSS and JavaScript in one file. No framework and no build step, which is why it runs on GitHub Pages with nothing else needed.
 
-Backend is Node.js with Express. It serves the site, proxies the Google Places API so the key never reaches the browser, and stores ballots and votes.
+Backend is Node.js with Express. It serves the site and stores ballots and votes through a REST API.
 
 Database is db.json, a JSON file on disk. Small project, very few writes, so a file does the job. Writes go to a temporary file first and then get renamed, so a crash halfway through cannot leave a half written database.
+
+The two halves are deliberately not welded together. The page works on its own, and picks up the server when there is one. Run `npm start` and the same page starts saving ballots to the database instead of putting them in the link.
 
 ## REST API
 
 | Method | Route | What it does |
 | --- | --- | --- |
-| GET | /api/health | Is the server up, is live search on |
-| GET | /api/places/search?q= | Search any place in Bengaluru |
-| GET | /api/places/nearby?lat=&lng=&kind= | Things near a chosen place |
+| GET | /api/health | Is the server up |
 | POST | /api/plans | Save a shortlist, returns a 6 character ballot code |
 | GET | /api/plans/:id | Load a ballot |
 | POST | /api/plans/:id/votes | Cast or change a vote |
@@ -59,35 +59,38 @@ Then open http://localhost:3000
 
 It works straight away using the built in list of 55 Bengaluru places. Live city wide search needs a Google key, see below.
 
-## Turning on live search
+## Turning on city wide search
+
+Out of the box you get the seven areas and 55 places we wrote ourselves. To search the rest of Bengaluru you need a Google key.
 
 1. Go to Google Cloud Console and make a project.
-2. Enable **Places API (New)**. The old Places API will not work, the request shape is different.
-3. Make an API key under Credentials, then restrict it to the Places API.
-4. Copy .env.example to .env and paste the key in.
-5. Restart the server.
+2. Enable **Places API (New)** and **Maps JavaScript API**. Both, not just one.
+3. Make an API key under Credentials.
+4. Restrict it to **HTTP referrers** and add `https://prajwalzv.github.io/*`. This matters. The key sits in the page, and the referrer restriction is what stops anyone else spending your quota with it.
+5. Open index.html, find the line near the top of the script that reads `var MAPS_KEY = "";` and paste the key between the quotes.
 
-Two things worth knowing before you turn it on. Google needs a card on the billing account even for the free usage. And because Katte asks for opening hours and price level, the requests fall in Google's Enterprise tier, which allows 1000 free calls a month and then charges. That is why every search is cached on the server for twenty minutes, so the same search never costs twice.
+Google needs a card on the billing account even for free usage, so set a budget alert while you are in there. Searches are cached in the page, so repeating the same search costs nothing.
 
-Without a key the search box politely says so and the rest of the app carries on working.
+Leave MAPS_KEY empty and the search box simply does not appear. Nothing breaks and nothing looks half finished.
+
+The browser talks to Google through the Maps JavaScript library rather than the plain web service, because Google blocks browser requests to the latter.
 
 ## Running the backend somewhere real
 
-GitHub Pages only serves static files, so it cannot run server.js. The live link above works but with live search turned off.
+GitHub Pages only serves files, so it cannot run server.js. That is fine, the site is built to work without it.
 
-To get the whole thing running, deploy the repo to a free Node host like Render, set GOOGLE_MAPS_API_KEY in its environment settings, and then add one line to index.html before the closing body tag so the GitHub Pages copy talks to it:
-
-```html
-<script>window.KATTE_API = "https://your-app.onrender.com";</script>
-```
+If you want ballots stored in the database instead of carried in the link, deploy the repo to a free Node host like Render and open that address instead. The page notices the server is there and offers to collect votes for you.
 
 ## Tests
 
 ```
-node test.js         cost maths, filtering, ballots
-node ui.js           loads the page and clicks through every screen
-node api.test.js     every API route over http
-node google.test.js  the Google request and how the response is read
+node test.js               cost maths, filtering, ballots
+node pages.test.js         the page exactly as GitHub Pages serves it
+node maps.test.js          the whole Google search path
+node load.test.js          20000 rolls, 5000 links, 2000 vote counts
+node browser.load.test.js  600 full UI cycles, checking for leaks
+node api.test.js           every API route over http
+node served.test.js        the page and server together, end to end
 ```
 
 ## Cost estimates
@@ -100,6 +103,7 @@ Prices for the built in places are our own estimates for 2025 and 2026, from pub
 | --- | --- |
 | Prajwal Vidyasagar | 1RX24CS172 |
 | Pratheeksha Reddy S M | 1RX24CS181 |
+| B Masoom | 1RN24CS043 |
 
 ## Licence
 
